@@ -1,0 +1,39 @@
+# .shrc
+
+alias run='python manage.py runserver'
+alias pm='python manage.py '
+alias addapp='python manage.py startapp '
+alias addsu='python manage.py createsuperuser '
+alias mkmigr='python manage.py makemigrations '
+alias migr='python manage.py migrate '
+
+# git
+alias ga="git add"
+alias gap="git add -p"
+alias gb="git branch"
+alias gbrn="git branch -m "
+alias gbadd="git switch -c "
+alias gbdel="git switch -d "
+alias gbdelf="git switch -D "
+alias gs="git status -s"
+alias gsl="git status"
+alias gct="git commit -m "
+alias gcte="git commit --allow-empty "
+alias gctem="git commit --allow-empty-message --no-edit"
+alias gp="git push "
+alias gpl="git pull "
+alias gsw="git switch "
+alias gll="git log "
+alias gl="git lg"
+alias gco="git checkout "
+alias gcom="git checkout master"
+alias grs="git reset --soft HEAD~1"
+alias grm="git reset --mixed HEAD~1"
+alias grh="git reset --hard HEAD~1"
+
+# cd
+alias ..="cd ../ "
+alias ...="cd ../../ "
+alias ..3="cd ../../../ "
+alias ..4="cd ../../../../ "
+alias ..5="cd ../../../../../ "

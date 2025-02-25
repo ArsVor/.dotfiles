@@ -1,0 +1,121 @@
+# Universal aliases. Include alias.list to shell config file.
+
+
+# abbr
+alias c="clear" ## Clear terminal.
+alias cp="cp -i " ## Copy interactive (Prompt before overwrite).
+alias cpf="/usr/bin/cp -f " ## Copy force (Do not prompt before overwriting).
+alias ff="fastfetch" ## Print system information (fastfetch). 
+alias md="mkdir -p " ## Create directory, if they do not already exist. Make parent directories as needed. 
+# mdj="mkdir -p <path>; cd <path> " ## Create directory, if they do not already exist (Make parent directories as needed). And jump to this directory.
+alias rmd="rm -d " ## Remove directory.
+alias rmdf="rm -dfr " ## Remove directory and all children objects.
+alias v="nvim " ## neovim
+alias te='$EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist). 
+alias ste='sudo $EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist) with superuser permissions.
+alias sdnf="sudo dnf " ## dnf with superuser permissions
+alias sdnfi="sudo dnf install " ## dnf install with superuser permissions
+alias rg="rg -. " ## rgrep do not ignore hidden objects
+alias quit="gnome-session-quit" ## Loggout ask confsrmations
+# als="cat ~/.config/alias.list | ... | fzf ..." ## Show the alias list with fzf. Selected alias is input to command line. Worck with shortcat - Ctrl+A. (In bash only shortcat - Alt+A. Alias don't worck). Func in config file.
+alias stow="stow -d ~/.dotfiles "
+
+# git
+alias lg="lazygit " ## Open Lazygit. Terminal GUI git maanger
+alias ga="git add" ## Add objects to git indexes
+alias gaa="git add . " ## Add all nonindexed objects to git indexes
+alias gap="git add -p" ## Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index. (type "gb --help" for detail)
+alias gb="git branch" ## Abbr for git branch. If --list is given, or if there are no non-option arguments, existing branches are listed; the current branch will be highlighted in green and marked with an asterisk. Any branches checked out in linked worktrees will be highlighted in cyan and marked with a plus sign. Option -r causes the remote-tracking branches to be listed, and option -a shows both local and remote branches. (Type gb --help for detail)
+alias gbrn="git branch -m " ## Move/rename a branch, together with its config and reflog. (type "gb --help" for detail)
+alias gbadd="git switch -c " ## Create a new branch named <new-branch> starting at <start-point> before switching to the branch. This is the transactional equivalent of $ git branch <new-branch>; $ git switch <new-branch> that is to say, the branch is not reset/created unless "git switch" is successful (e.g., when the branch is in use in another worktree, not just the current branch stays the same, but the branch is not reset to the start-point, either). (type "gb --help" for detail)
+alias gbdel="git branch -d " ## need add fzf Delete a branch. The branch must be fully merged in its upstream branch, or in HEAD. (type "gb --help" for detail)
+alias gbdelf="git branch -D " ## need add fzf Delete a branch force. (type "gb --help" for detail)
+alias gs="git status -s" ## Show the working tree status. Give the output in the short-format.
+alias gsl="git status" ## Show the working tree status. (type "gsl --help" for detail)
+alias gct="git commit -m " ## Record changes to the local repository. Use the given <"msg"> as the commit message. If multiple -m options are given (gct <"msg1"> -m <"msg2">), their values are concatenated as separate paragraphs. (type "git commit --help" for detail)
+alias gcte="git commit --allow-empty " ## Record to the local repository with no changes.
+alias gctem="git commit --allow-empty-message --no-edit" ## Record changes to the repository with empty message.
+alias gctam="git commit --amend " ## Edit last commit message. (gctam -m <"New msg"> - to change without editor)
+alias gc="git clone " ## Clone git repo to current directory (gc https://git-repo-addr.git).
+alias gp="git push " ## Record local repository to the remote repository. (type "gp --help" for detail)
+alias gpl="git pull " ## Fetch from and integrate with another repository or a local branch "gpl [<options>] [<repository> [<refspec>...]]" (type "gpl --help" for detail)
+alias gll="git log " ## Show commit logs
+alias gl="git lg" ## Show commit logs "short and pretty"
+alias gcom='git checkout $(git config --global init.defaultBranch)' ## Switch to master/main branch (sensitive to your .gitconfig).
+alias grs="git reset --soft HEAD~1" ## Reset current HEAD to the specified state. Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
+alias grm="git reset --mixed HEAD~1" ## Reset current HEAD to the specified state. Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated.
+alias grh="git reset --hard HEAD~1" ## Reset current HEAD to the specified state. Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded. Any untracked files or directories in the way of writing any tracked files are simply deleted.
+# gluch="git lg $(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print \$1}')..HEAD" ## Show commits in current HEAD that is does'nt exist in selected branch (Used fzf for select). Func in config file.
+# glluch="git log $(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print \$1}')..HEAD -p" ## Show commits in current HEAD that is does'nt exist in selected branch, with diff (Used fzf for select). Func in config file.
+# glucb="git lg $(git config --global init.defaultBranch)..$(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print $1}')" ## Show commits in selected branch that is does'nt exist in master/main branch (Used fzf for select. Sensitive to your .gitconfig). Func in config file.
+# gllucb="git log $(git config --global init.defaultBranch)..$(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print $1}') -p" ##  Show commits in selected branch that is does'nt exist in master/main branch, with diff (Used fzf for select. Sensitive to your .gitconfig). Func in config file.
+# gsw='git switch $(git branch | fzf | awk "{print \$1}")' ## Switch to selected branch (Used fzf for select available branches).  Func in config file.
+# gco='git checkout $(gl | fzf | awk "{print \$2}")' ## Switch to selected commit (Used fzf for select commit). Func in config file.
+
+# cd
+alias ..="cd ../ " ## Navigate 1 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+alias ...="cd ../../ " ## Navigate 2 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+alias ..3="cd ../../../ " ## Navigate 3 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+alias ..4="cd ../../../../ " ## Navigate 4 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+alias ..5="cd ../../../../../ " ## Navigate 5 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+# alias ..n="..n N" ## Navigate N step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+alias cdb="cd ~/.local/bin/ " ## Navigate to the $HOME/.local/bin/ directory.
+alias cdc="cd ~/.config/ " ## Navigate to the $HOME/.config/ directory.
+alias cdd="cd ~/Downloads/ " ## Navigate to the $HOME/Downloads/ directory.
+alias cdg="cd ~/github/ " ## Navigate to the $HOME/github/ directory.
+alias cdl="cd ~/.local/ " ## Navigate to the $HOME/.local/ directory.
+alias cds="cd ~/.scr/ " ## Navigate to the $HOME/.scr/ directory.
+alias cdp='cd $(echo $CURRENT_PROJECT)' ## Navigate to the directory that is set as the current project (If $CURRENT_PROJECT is unset, navigate to the $HOME directory instead. Use the "setcp" command to set the current working directory as the current project directory.)
+alias cdv="cd ~/.config/nvim/ " ## Navigate to the Neovim config directory.
+alias dtop="cd ~/Desktop/ " ## Navigate to the $HOME/Desktop/ directory.
+alias doc="cd ~/Documents/ " ## Navigate to the $HOME/.Documents/ directory.
+
+# ls
+alias ls="exa " ## Use the "exa" command instead of the "ls" command
+alias la="exa -a --icons=auto " ## List information about the directory content (the current directory by default). Show hidden and 'dot' objects. (Use "ls -a" to also show the '.' and '..' directories.)
+alias ll="exa -la --icons=always " ## List information about the directory content (the current directory by default). Show hidden and 'dot' objects in long format. (Use "ll -a" to also show the '.' and '..' directories.)
+alias fl="exa -f --icons=never " ## Show files only
+alias fla="exa -fa --icons=never " ## Show files only with hidden and 'dot' files.
+alias fll="exa -fla --icons=always " ## Show files only with hidden and 'dot' files in long format.
+alias dl="exa -D --icons=never " ## Show directoryes only.
+alias dla="exa -Da --icons=never " ## Show directoryes only with hidden and 'dot' directoryes.
+alias dll="exa -Dla --icons=always " ## Show directoryes only with hidden and 'dot' directoryes in long format.
+alias tree="exa -Ta --icons=auto " ## Use the "exa" command instead of the "tree" command
+
+# cat
+alias cat="bat " ## Use the "bat" command instead of the "cat" command
+alias gw="glow " ## View .md file (In terminal instansely). 
+alias gwp="glow -p " ## View .md file with pager (In view window).
+alias mybnd="glow -p ~/.config/shortcats.md" ## View keyboard shortcats.
+
+# other
+alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
+alias confa='$EDITOR ~/.config/alias.list' ## Open the 'alias.list' in your standart text editor.
+alias confb='$EDITOR ~/.bashrc' ## Open the '.bashrc' in your standart text editor.
+alias confs='$EDITOR ~/.shrc' ## Open the X in your standart text editor.
+alias confk='$EDITOR ~/.config/kitty/kitty.conf' ## Open the 'kitty.conf' in your standart text editor.
+alias rlsh='source $CONFIG_SH_PATH' ## Reload shell 
+alias scr="~/.scr/add_script_file.sh " ## Creates a new executable file with the specified shebang based on the provided FLAG, and then opens it in the default editor (set by $EDITOR, defaults to 'nano' if not set). If the file already exists, it prompts you to open it. The script also verifies if the target directory exists before file creation. If the target directory does not exists, it prompts you to create it (with parents directoryes if they does not exist). 
+# setcp="~/.scr/set_current_project_path.sh " ## Set the worcking directory as the $CURRENT_PROJECT (You can jump to the $CURRENT_PROJECT directory with the "cdp" command). Func in config file.
+# mmry="echo $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {print int((total - available) / total * 100) "%"}'" ## Show used memory percent. Func in config file.
+# swap="echo $(awk '/SwapTotal/ {total=$2} /SwapFree/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)	" ## Show used swap file percent. Func in config file.
+# bttr="echo $(cat /sys/class/power_supply/BAT0/capacity)% - $(cat /sys/class/power_supply/BAT0/status)" ## Show the battery charge level. Func in config file.
+# ct='echo $(date | awk "{print \$4}")' ## Show current time. Func in config file.
+# myip="echo $(ifconfig | grep broadcast | awk '{print $2}')" ## Show your IP. Func in config file.
+
+# python
+alias py="python" ## Run python current version 
+# pyrun="pyenv activate " ## List all avaliable Python virtualenvs with fzf (virtualenv name must started with "py") and activate selected. Func in config file.
+alias pyoff="pyenv deactivate" ## Deactivate virtualenv
+alias echoenv='echo $VIRTUAL_ENV' ## Print active virtualenv version path
+# alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
+# alias vrun="source ./venv/bin/activate.fish" ## Activate python venv based in current directory
+# alias voff="deactivate" ## Deactivate python venv
+
+# django
+alias run='python manage.py runserver' ## Abbr for "python manage.py runserver" usable in venv with the installed gjango.
+alias pm='python manage.py ' ## Abbr for "python manage.py" usable in venv with the installed gjango.
+alias addapp='python manage.py startapp ' ## Abbr for "python manage.py startapp" usable in venv with the installed gjango.
+alias addsu='python manage.py createsuperuser ' ## Abbr for "python manage.py createsuperuser" usable in venv with the installed gjango.
+alias mkmigr='python manage.py makemigrations ' ## Abbr for "python manage.py makemigrations" usable in venv with the installed gjango.
+alias migr='python manage.py migrate ' ## Abbr for "python manage.py migrate" usable in venv with the installed gjango.
