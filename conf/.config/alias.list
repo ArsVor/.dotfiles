@@ -13,10 +13,10 @@ alias rmdf="rm -dfr " ## Remove directory and all children objects.
 alias v="nvim " ## neovim
 alias te='$EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist). 
 alias ste='sudo $EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist) with superuser permissions.
-alias sdnf="sudo dnf " ## dnf with superuser permissions
-alias sdnfi="sudo dnf install " ## dnf install with superuser permissions
+alias pau="pikaur " ## dnf with superuser permissions
+alias pac="pacman " ## dnf install with superuser permissions
+alias spac="sudo pacman " ## dnf install with superuser permissions
 alias rg="rg -. " ## rgrep do not ignore hidden objects
-alias quit="gnome-session-quit" ## Loggout ask confsrmations
 # als="cat ~/.config/alias.list | ... | fzf ..." ## Show the alias list with fzf. Selected alias is input to command line. Worck with shortcat - Ctrl+A. (In bash only shortcat - Alt+A. Alias don't worck). Func in config file.
 alias stow="stow -d ~/.dotfiles "
 
@@ -107,7 +107,7 @@ alias scr="~/.scr/add_script_file.sh " ## Creates a new executable file with the
 # python
 alias py="python" ## Run python current version 
 # pyrun="pyenv activate " ## List all avaliable Python virtualenvs with fzf (virtualenv name must started with "py") and activate selected. Func in config file.
-alias pyoff="pyenv deactivate" ## Deactivate virtualenv
+# alias pyoff="pyenv deactivate" ## Deactivate virtualenv
 alias echoenv='echo $VIRTUAL_ENV' ## Print active virtualenv version path
 # alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
 # alias vrun="source ./venv/bin/activate.fish" ## Activate python venv based in current directory

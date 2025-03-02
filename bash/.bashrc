@@ -16,10 +16,10 @@ bind -x '"\C-d": "echo Disabled Ctrl+D\n"'
 
 export CONFIG_SH_PATH="$HOME/.bashrc"
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#export PATH="$HOME/.pyenv/bin:$PATH"
+#eval "$(pyenv init --path)"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 # fzf configuration
 export FZF_DEFAULT_COMMAND="fd --color=never --hidden --exclude .git --search-path /"

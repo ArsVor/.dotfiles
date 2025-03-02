@@ -1,0 +1,28 @@
+{
+  "printWidth": 80,
+  "semi": false,
+  "tabWidth": 4,
+  "useTabs": false,
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": [
+        "*.html",
+        "*.scss",
+        "legacy/**/*.js"
+      ],
+      "options": {
+        "tabWidth": 2,
+        "printWidth": 160
+      }
+    }
+  ]
+}

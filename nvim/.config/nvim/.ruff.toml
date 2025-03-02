@@ -1,0 +1,16 @@
+target-version = "py313"
+line-length = 119
+indent-width = 4
+
+[lint]
+select = ["I", "W292", "E501"]
+
+[lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402"]
+
+[format]
+line-ending = "lf"
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
