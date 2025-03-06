@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sh -c "/opt/google/chrome/google-chrome --profile-directory=Default --app=https://translate.google.com/"
+sh -c "/opt/microsoft/msedge/microsoft-edge --profile-directory=Default --app=https://translate.google.com/"

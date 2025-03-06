@@ -6,10 +6,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 bind '"\C-e": "\C-d"'
 bind -x '"\C-d": "echo Disabled Ctrl+D\n"'
@@ -26,7 +23,6 @@ export FZF_DEFAULT_COMMAND="fd --color=never --hidden --exclude .git --search-pa
 export FZF_DEFAULT_OPTS="--no-height --border"
 export FZF_ALT_C_COMMAND="fd --type d . --color=never --hidden --exclude .git"
 export FZF_ALT_C_OPTS="--preview 'tree --color=always {} | head -50'"
-
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
@@ -52,7 +48,6 @@ fi
 if [ -f ~/.config/bash_current_progect_env ]; then
     . ~/.config/bash_current_progect_env
 fi
-
 
 # Перевірка на інтерактивний сеанс та чи викликано fastfetch раніше
 if [[ $- == *i* ]] && [[ -z $FASTFETCH_RUN ]]; then
@@ -81,21 +76,21 @@ mdj() {
 }
 
 mmry() {
-	echo $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)
-	
+    echo $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)
+
 }
 
 swap() {
-	echo $(awk '/SwapTotal/ {total=$2} /SwapFree/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)	
+    echo $(awk '/SwapTotal/ {total=$2} /SwapFree/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)
 }
 
 bttr() {
-	echo $(cat /sys/class/power_supply/BAT0/capacity)% - $(cat /sys/class/power_supply/BAT0/status)
+    echo $(cat /sys/class/power_supply/BAT0/capacity)% - $(cat /sys/class/power_supply/BAT0/status)
 }
 
-pyrun() {
-    pyenv activate $(ls /home/ars/.pyenv/versions | rg py | awk '{print $1}' | fzf --cycle --height=25% --reverse)
-}
+# pyrun() {
+#     pyenv activate $(ls /home/ars/.pyenv/versions | rg py | awk '{print $1}' | fzf --cycle --height=25% --reverse)
+# }
 
 als() {
     # Зчитуємо alias.list, обробляємо його та отримуємо результат через fzf
@@ -107,11 +102,11 @@ als() {
 
     # Якщо результат порожній, просто оновлюємо термінал
     if [[ -z "$result" ]]; then
-		echo "NO"
+        echo "NO"
         tput sgr0 # Скидання кольорів (аналог repaint)
         return
     fi
-	echo "OK"
+    echo "OK"
     # Вставляємо команду в термінал
     READLINE_LINE="${READLINE_LINE:+$READLINE_LINE }$result"
     # READLINE_LINE="$result"
@@ -121,37 +116,37 @@ bind -x '"\ea": als'
 
 # # Custom fzf functions
 # fzf-file-widget-default() {
-    # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    # export FZF_CTRL_T_OPTS=""
-    # fzf-file-widget
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_CTRL_T_OPTS=""
+# fzf-file-widget
 # }
-# 
+#
 # fzf-file-widget-ctrl-f() {
-    # export FZF_CTRL_T_COMMAND="fd --type f --color=never --hidden --exclude .git --search-path ~/ "
-    # export FZF_CTRL_T_OPTS="--reverse --preview 'bat --color=always --line-range :50 {}'"
-    # fzf-file-widget
+# export FZF_CTRL_T_COMMAND="fd --type f --color=never --hidden --exclude .git --search-path ~/ "
+# export FZF_CTRL_T_OPTS="--reverse --preview 'bat --color=always --line-range :50 {}'"
+# fzf-file-widget
 # }
-# 
+#
 # fzf-dir-widget() {
-    # export FZF_CTRL_T_COMMAND="fd --type d . --color=never --hidden --exclude .git --search-path ~/ "
-    # export FZF_CTRL_T_OPTS="--reverse --preview 'tree --color=always {} | head -50'"
-    # fzf-file-widget
+# export FZF_CTRL_T_COMMAND="fd --type d . --color=never --hidden --exclude .git --search-path ~/ "
+# export FZF_CTRL_T_OPTS="--reverse --preview 'tree --color=always {} | head -50'"
+# fzf-file-widget
 # }
-# 
+#
 # fzf-ps-widget() {
-    # local result
-    # local commandline=$(history | tail -n1)  # Аналог команди __fzf_parse_commandline
-    # local prefix="${commandline:0:2}"       # Імітація парсингу введеного тексту
-# 
-    # export FZF_DEFAULT_OPTS="--reverse --header='USER       STATUS     COMMAND' --preview='ps o pid,priority,tty,pcpu,pmem,start_time,time {4}'"
-    # result=$(ps aux | awk '{printf "%-10s %-10s %-30s %s\n", $1, $8, $11, $2}' | fzf --with-nth=1,2,3 --query='' | awk '{print $NF}')
-    # 
-    # if [ -n "$result" ]; then
-        # READLINE_LINE="${READLINE_LINE}${prefix}${result} "
-    # fi
+# local result
+# local commandline=$(history | tail -n1)  # Аналог команди __fzf_parse_commandline
+# local prefix="${commandline:0:2}"       # Імітація парсингу введеного тексту
+#
+# export FZF_DEFAULT_OPTS="--reverse --header='USER       STATUS     COMMAND' --preview='ps o pid,priority,tty,pcpu,pmem,start_time,time {4}'"
+# result=$(ps aux | awk '{printf "%-10s %-10s %-30s %s\n", $1, $8, $11, $2}' | fzf --with-nth=1,2,3 --query='' | awk '{print $NF}')
+#
+# if [ -n "$result" ]; then
+# READLINE_LINE="${READLINE_LINE}${prefix}${result} "
+# fi
 # }
-# 
-# 
+#
+#
 # bind '"\C-h":"fzf-ps-widget\n"'
 # bind '"\C-t":"fzf-file-widget-default\n"'
 # bind '"\C-f":"fzf-file-widget-ctrl-f\n"'

@@ -1,0 +1,203 @@
+
+#### Zsh config functions ###
+function zsh_add_source () {
+    [ -f "$ZSHCONFDIR/$1" ] && source "$ZSHCONFDIR/$1"
+}
+
+function zsh_add_plugin () {
+    PLUGIN_NAME=$(echo "$1" | cut -d "/" -f 2)
+    if ! [ -d "$ZSHCONFDIR/plugins/$PLUGIN_NAME" ]; then
+        git clone "https://github.com/$1.git" "$ZSHCONFDIR/plugins/$PLUGIN_NAME"
+    fi
+
+    zsh_add_source "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+    zsh_add_source "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+}
+
+#### Starship prompt functions ####
+function trunc_path() {
+    local full_path="$PWD"
+    local rel_path="${PWD/#$HOME/~}"
+    local path_deep=$(( ${#rel_path} - ${#${rel_path//\//}} ))
+    (( path_deep -= 3 ))
+    
+    if [[ $rel_path =~ ^~ ]]; then
+        local root_symbol="~/"
+    else
+        local root_symbol="/"
+    fi
+    if [[ $path_deep -gt 0 ]]; then 
+        local result=$(echo $full_path | awk -F"/" '{print $(NF-2)"/"$(NF-1)"/"$(NF)}')
+        echo "$root_symbol$path_deep../$result"
+    else
+        echo "$rel_path"
+    fi
+}
+
+#### Vi mode zle functions ####
+
+# "jj" for esc  
+function trig_vi_escape() {
+    # Чекаємо 200 мс на другу клавішу
+    read -t 0.2 -k 1 second_key
+    if [[ $second_key == "j" ]]; then
+        zle vi-cmd-mode  # Переходимо в командний режим
+    else
+        LBUFFER+="j$second_key"  # Вставляємо "j" і наступну клавішу (якщо була)
+    fi
+}
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+
+# initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+zle-line-init() {
+    zle -K viins 
+    echo -ne "\e[5 q"
+}
+
+#### Sesh zle functions #### 
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    zle reset-prompt > /dev/null 2>&1 || true
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+
+#### fzf functions ####
+function fzf-file-widget-default () {
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_CTRL_T_OPTS=''
+    fzf-file-widget
+}
+
+function fzf-file-widget-ctrl-f () {
+    export FZF_CTRL_T_COMMAND="fd --type f --color=never --hidden --exclude .git --search-path ~/"
+    export FZF_CTRL_T_OPTS="--reverse --preview 'bat --color=always --line-range :50 {}'"
+    fzf-file-widget
+}
+
+function fzf-dir-widget () {
+    export FZF_CTRL_T_COMMAND="fd --type d . --color=never --hidden --exclude .git --search-path ~/"
+    export FZF_CTRL_T_OPTS="--reverse --preview 'exa -Ta --color=always {} | head -50'"
+    fzf-file-widget
+}
+
+function fzf-ps-widget () {
+    # Зберігаємо поточний введений текст
+    local prefix="${LBUFFER}"
+
+    # Активуємо ZLE, щоб уникнути помилки
+    zle -I
+
+    # # Якщо ми всередині tmux, використовуємо fzf-tmux
+    # local fzf_cmd="fzf"
+    # if [[ -n "$TMUX" ]]; then
+    #     fzf_cmd="fzf-tmux -p 60%"
+    # else
+    #     fzf_cmd = "fzf"
+    # fi
+
+    # # Налаштування висоти FZF у tmux або стандартному терміналі
+    # [[ -z "$FZF_TMUX_HEIGHT" ]] && FZF_TMUX_HEIGHT="40%"
+
+    # Генеруємо список процесів
+    local result=$(ps aux | awk '{printf "%-10s %-10s %-30s %s\n", $1, $8, $11, $2}' | \
+        FZF_DEFAULT_OPTS="--reverse --header='USER       STATUS     COMMAND' --preview='ps o pid,priority,tty,pcpu,pmem,start_time,time {4}'" \
+        fzf --with-nth=1,2,3 --query='' | awk '{print $NF}')
+
+    # Якщо нічого не вибрано, виходимо
+    [[ -z "$result" ]] && zle reset-prompt && return
+
+    # Вставляємо обраний PID
+    LBUFFER="${prefix}${result} "
+
+    # Оновлюємо командний рядок
+    zle reset-prompt
+}
+
+#### Cusstom commands ####
+
+function ct () {
+    date "+%H:%M:%S"
+}
+
+function myip () {
+    echo (ifconfig | grep broadcast | awk '{print $2}')
+}
+
+function mdj () {
+	mkdir -p $1
+	cd $1
+}
+
+function bttr () {
+    	echo $(cat /sys/class/power_supply/BAT0/capacity)% - $(cat /sys/class/power_supply/BAT0/status)
+}
+
+function mmry () {
+	echo $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)
+}
+
+function swap () {
+	echo $(awk '/SwapTotal/ {total=$2} /SwapFree/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)
+}
+
+function gco () {
+    git checkout $(gl | fzf --reverse --height 50% | awk '{print $2}')
+}
+
+function gsw () {
+    git switch $(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print $1}')
+}
+
+function gluch () {
+    git lg $(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print $1}')..HEAD
+}
+
+function glucb () {
+    git lg $(git config --global init.defaultBranch)..$(git branch | sed 's/*/ /' |  grep -v $(git config --global init.defaultBranch) | fzf --reverse --height 50% | awk '{print $1}')
+}
+
+function glluch () {
+    git log $(git branch | grep -v '^*' | fzf --reverse --height 50% | awk '{print $1}')..HEAD -p
+}
+
+function gllucb () {
+    git log $(git config --global init.defaultBranch)..$(git branch | sed 's/*/ /' |  grep -v $(git config --global init.defaultBranch) | fzf --reverse --height 50% | awk '{print $1}') -p
+}
+
+function ..n () {
+    local cmd=''
+    local deep=1
+
+    if [[ $1 =~ ^[0-9]+$ ]]; then
+        deep=$(( $1 ))
+    fi
+
+    while [ $deep -gt 0 ]; do 
+       cmd="${cmd}../"
+       (( deep-- ))
+    done
+
+    cd $cmd
+}
+
+# function pyrun  () {
+#     pyenv activate $(ls /home/ars/.pyenv/versions | rg py | awk '{print $1}' | fzf --cycle --height=25% --reverse)
+# }

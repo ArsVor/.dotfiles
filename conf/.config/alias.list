@@ -2,10 +2,12 @@
 
 
 # abbr
+alias e="exit" ## Exit.
 alias c="clear" ## Clear terminal.
 alias cp="cp -i " ## Copy interactive (Prompt before overwrite).
 alias cpf="/usr/bin/cp -f " ## Copy force (Do not prompt before overwriting).
 alias ff="fastfetch" ## Print system information (fastfetch). 
+alias j="z " ## Zoxide. 
 alias md="mkdir -p " ## Create directory, if they do not already exist. Make parent directories as needed. 
 # mdj="mkdir -p <path>; cd <path> " ## Create directory, if they do not already exist (Make parent directories as needed). And jump to this directory.
 alias rmd="rm -d " ## Remove directory.
@@ -16,7 +18,7 @@ alias ste='sudo $EDITOR ' ## Open file in standart text editor (Create file, if 
 alias pau="pikaur " ## dnf with superuser permissions
 alias pac="pacman " ## dnf install with superuser permissions
 alias spac="sudo pacman " ## dnf install with superuser permissions
-alias rg="rg -. " ## rgrep do not ignore hidden objects
+alias rg="rg -. " ## ripgrep do not ignore hidden objects
 # als="cat ~/.config/alias.list | ... | fzf ..." ## Show the alias list with fzf. Selected alias is input to command line. Worck with shortcat - Ctrl+A. (In bash only shortcat - Alt+A. Alias don't worck). Func in config file.
 alias stow="stow -d ~/.dotfiles "
 
@@ -75,6 +77,7 @@ alias doc="cd ~/Documents/ " ## Navigate to the $HOME/.Documents/ directory.
 alias ls="exa " ## Use the "exa" command instead of the "ls" command
 alias la="exa -a --icons=auto " ## List information about the directory content (the current directory by default). Show hidden and 'dot' objects. (Use "ls -a" to also show the '.' and '..' directories.)
 alias ll="exa -la --icons=always " ## List information about the directory content (the current directory by default). Show hidden and 'dot' objects in long format. (Use "ll -a" to also show the '.' and '..' directories.)
+alias lr="exa -la --icons=always | rg -. " ## List information about the current directory content with ripgrep.
 alias fl="exa -f --icons=never " ## Show files only
 alias fla="exa -fa --icons=never " ## Show files only with hidden and 'dot' files.
 alias fll="exa -fla --icons=always " ## Show files only with hidden and 'dot' files in long format.
@@ -90,11 +93,12 @@ alias gwp="glow -p " ## View .md file with pager (In view window).
 alias mybnd="glow -p ~/.config/shortcats.md" ## View keyboard shortcats.
 
 # other
-alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
+# alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
 alias confa='$EDITOR ~/.config/alias.list' ## Open the 'alias.list' in your standart text editor.
 alias confb='$EDITOR ~/.bashrc' ## Open the '.bashrc' in your standart text editor.
 alias confs='$EDITOR ~/.shrc' ## Open the X in your standart text editor.
 alias confk='$EDITOR ~/.config/kitty/kitty.conf' ## Open the 'kitty.conf' in your standart text editor.
+alias confz='$EDITOR ~/.zshrc' ## Open the '.zshrc' in your standart text editor.
 alias rlsh='source $CONFIG_SH_PATH' ## Reload shell 
 alias scr="~/.scr/add_script_file.sh " ## Creates a new executable file with the specified shebang based on the provided FLAG, and then opens it in the default editor (set by $EDITOR, defaults to 'nano' if not set). If the file already exists, it prompts you to open it. The script also verifies if the target directory exists before file creation. If the target directory does not exists, it prompts you to create it (with parents directoryes if they does not exist). 
 # setcp="~/.scr/set_current_project_path.sh " ## Set the worcking directory as the $CURRENT_PROJECT (You can jump to the $CURRENT_PROJECT directory with the "cdp" command). Func in config file.
