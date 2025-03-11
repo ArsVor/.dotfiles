@@ -300,16 +300,21 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
+                # widget.Systray(),
                 widget.KeyboardLayout(
                     configured_keyboards=["us", "ua"],
                     display_map={"us": " en", "ua": " uk"},
                 ),
                 widget.CheckUpdates(
                     colour_have_updates="#e67e80",
-                    custom_command="picaur -Qu | wc -l",
+                    custom_command="pikaur -Qu ",
                     display_format="   {updates}",
                     update_interval=600,
-                    mouse_callbacks={"Button1": lazy.spawn("kitty -e pikaur -Syu")},
+                    mouse_callbacks={
+                        "Button1": lazy.spawn(
+                            "zsh -c ~/.config/qtile/src/qtile_update.sh"
+                        )
+                    },
                 ),
                 # widget.Sep(),
                 widget.CPU(
@@ -338,14 +343,62 @@ screens = [
                     low_percentage=0.2,
                     show_short_text=False,
                 ),
-                # widget.Sep(),
                 widget.PulseVolume(
                     # emoji=True,
-                    mute_format="     ",
-                    unmute_format="  {volume}% ",
+                    mute_format="   ",
+                    unmute_format="  {volume}%",
                     foreground="#dbbc7f",
                 ),
-                # widget.Systray(),
+                widget.WidgetBox(
+                    widgets=[
+                        widget.Sep(),
+                        widget.Bluetooth(
+                            foreground="#7fbbb3",
+                            adapter_format="{powered}{name} ",
+                            device_format="{symbol}{name} {battery_level} ",
+                            device_battery_format="(󰥉{battery}%)",
+                            default_text="  {num_connected_devices} ",
+                            default_show_battery=True,
+                            symbol_powered=(" 󰂰 ", " 󰂲 "),
+                            symbol_connected=" 󰂰 ",
+                            symbol_paired=" 󰂲 ",
+                            symbol_discovery=(" 󰂱 ", "  "),
+                            update_interval=5,
+                            mouse_callbacks={
+                                "Button1": lazy.spawn(
+                                    "rofi-bluetooth -theme ~/.local/share/rofi/themes/bluetooth.rasi &"
+                                )
+                            },
+                        ),
+                        widget.Sep(),
+                        widget.Wlan(
+                            foreground="#83c092",
+                            interface="wlxac5afc411153",
+                            format=" 󱚻 ",
+                            disconnected_message=" 󰖪 ",
+                            update_interval=5,
+                            mouse_callbacks={
+                                "Button1": lazy.spawn(
+                                    "zsh -c ~/.config/qtile/src/rofi-wifi-menu.sh &"
+                                )
+                            },
+                        ),
+                        widget.Net(
+                            foreground="#83c092",
+                            format="{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}",
+                            mouse_callbacks={
+                                "Button1": lazy.spawn(
+                                    "zsh -c ~/.config/qtile/src/rofi-wifi-menu.sh &"
+                                )
+                            },
+                        ),
+                    ],
+                    close_button_location="right",
+                    text_closed=" 󰀂 ",
+                    text_open=" 󰢃 ",
+                    foreground="#d699b6",
+                ),
+                # widget.Sep(),
                 widget.Sep(),
                 widget.QuickExit(
                     default_text="  ",
