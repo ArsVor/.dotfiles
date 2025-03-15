@@ -20,8 +20,8 @@ show=("${all[@]}")
 
 declare -A texts
 texts[lockscreen]="lock screen"
-texts[logout]="log out"
 texts[suspend]="suspend"
+texts[logout]="log out"
 texts[reboot]="reboot"
 texts[shutdown]="shut down"
 # texts[hibernate]="hibernate"
@@ -29,8 +29,8 @@ texts[shutdown]="shut down"
 
 declare -A numbers
 numbers[lockscreen]="[1]"
-numbers[logout]="[2]"
-numbers[suspend]="[3]"
+numbers[suspend]="[2]"
+numbers[logout]="[3]"
 numbers[reboot]="[4]"
 numbers[shutdown]="[5]"
 # numbers[hibernate]="[4]"
@@ -38,8 +38,8 @@ numbers[shutdown]="[5]"
 
 declare -A icons
 icons[lockscreen]="\Uf033e"
-icons[logout]="\Uf0343"
 icons[suspend]="\Uf04b2"
+icons[logout]="\Uf0343"
 icons[reboot]="\Uf0709"
 icons[shutdown]="\Uf0425"
 icons[cancel]="\Uf0156"
@@ -50,8 +50,8 @@ declare -A actions
 actions[lockscreen]="xset s activate"
 #actions[switchuser]="???"
 # actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
-actions[logout]="qtile cmd-obj -o root -f shutdown"
 actions[suspend]="systemctl suspend"
+actions[logout]="qtile cmd-obj -o root -f shutdown"
 # actions[hibernate]="systemctl hibernate"
 actions[reboot]="systemctl reboot"
 actions[shutdown]="systemctl poweroff"
