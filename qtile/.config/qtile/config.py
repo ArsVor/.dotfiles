@@ -97,6 +97,13 @@ keys = [
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "control"], "s", lazy.spawn("systemctl suspend"), desc="Lock screen"),
+    Key(
+        [mod],
+        "p",
+        lazy.spawn("sh -c '~/.config/qtile/src/rofi-power-menu.sh'"),
+        desc="Power menu",
+    ),
     # Switch group (outher added in for loop)
     Key(
         [mod, "control"],
@@ -369,7 +376,7 @@ screens = [
                 widget.CheckUpdates(
                     colour_have_updates="#e67e80",
                     # custom_command="pikaur -Qu ",
-                    custom_command="pacman -Qu &>/dev/null; pikaur -Qu ",
+                    custom_command="~/.config/qtile/update_check.sh ",
                     display_format="   {updates}",
                     update_interval=600,
                     mouse_callbacks={
