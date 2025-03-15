@@ -32,6 +32,7 @@ from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 from libqtile.lazy import lazy
 
 mod = "mod4"
+modkey = "mod1"
 terminal = "kitty"
 calculator = "gnome-calculator"
 calendar = "gnome-calendar"
@@ -45,6 +46,28 @@ outlook = "mail"
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.call(home)
+
+
+@hook.subscribe.client_managed
+def move_to_current_group(window):
+    current_group = window.qtile.current_group
+    if window.group != current_group:
+        window.togroup(current_group.name, switch_group=False)
+
+
+previous_layouts = [""] * 9
+
+
+def toggle_max_layout(qtile):
+    current_layout = qtile.current_layout.name
+    current_group = int(qtile.current_group.name)
+
+    if current_layout == "max":
+        previous_layout = previous_layouts[current_group - 1]
+        qtile.current_group.setlayout(previous_layout)
+    else:
+        previous_layouts[current_group - 1] = current_layout
+        qtile.current_group.setlayout("max")
 
 
 groups = [Group(i) for i in "123456789"]
@@ -74,6 +97,19 @@ keys = [
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    # Switch group (outher added in for loop)
+    Key(
+        [mod, "control"],
+        "left",
+        lazy.screen.prev_group(),
+        desc="Move focus to previous group",
+    ),
+    Key(
+        [mod, "control"],
+        "right",
+        lazy.screen.next_group(),
+        desc="Move focus to next group",
+    ),
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -114,12 +150,21 @@ keys = [
     # multiple stack panes
     Key(
         [mod],
-        "m",
+        "z",
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
+    # MonadTall keybindings
+    Key([modkey], "i", lazy.layout.grow()),
+    Key([modkey], "m", lazy.layout.shrink()),
+    Key([modkey], "n", lazy.layout.reset()),
+    Key([modkey], "o", lazy.layout.maximize()),
+    Key([modkey, "shift"], "s", lazy.layout.toggle_auto_maximize()),
+    Key([modkey, "shift"], "space", lazy.layout.flip()),
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod, "control"], "n", lazy.next_layout(), desc="Next layouts"),
+    Key([mod, "control"], "p", lazy.prev_layout(), desc="Previous layouts"),
+    Key([mod], "Tab", lazy.function(toggle_max_layout), desc="Toggle Max layout"),
     Key(
         [mod],
         "f",
@@ -136,23 +181,36 @@ keys = [
     # Run and quit
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "mod1"], "space", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "a", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "c", lazy.spawn(calculator), desc="Launch calculator"),
     Key([mod], "g", lazy.spawn(gpt_chat), desc="Launch gpt_chat"),
+    Key([mod], "m", lazy.spawn(outlook), desc="Launch outlook"),
     Key([mod], "o", lazy.spawn("obsidian"), desc="Launch obsidian"),
     Key([mod], "t", lazy.spawn(google_translate), desc="Launch google_translate"),
-    Key([mod], "a", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     KeyChord(
         [mod],
         "e",
         [
-            Key([], "d", lazy.spawn(calendar)),
-            Key([], "e", lazy.spawn("rofi -show drun")),
-            Key([], "g", lazy.spawn("google-chrome")),
-            Key([], "m", lazy.spawn(outlook)),
-            Key([], "r", lazy.spawn("rofi -show run")),
-            Key([], "s", lazy.spawn("rofi -show ssh")),
-            Key([], "z", lazy.spawn("zen-browser")),
+            Key([], "c", lazy.spawn("gcolor3"), desc="Launch color picker"),
+            Key(["shift"], "c", lazy.spawn("gnome-contacts"), desc="Launch contacts"),
+            Key([], "d", lazy.spawn(calendar), desc="Launch calendar"),
+            Key([], "e", lazy.spawn("rofi -show drun"), desc="Launch drun"),
+            Key([], "f", lazy.spawn("nautilus"), desc="Launch nautilus"),
+            Key([], "g", lazy.spawn("google-chrome"), desc="Launch google chrome"),
+            Key([], "h", lazy.spawn("rofi -show ssh"), desc="Launch ssh connector"),
+            Key([], "m", lazy.spawn("gnome-maps"), desc="Launch maps"),
+            Key([], "r", lazy.spawn("rofi -show run"), desc="Launch executable"),
+            Key(
+                [],
+                "s",
+                lazy.spawn("gnome-system-monitor"),
+                desc="Launch system monitor",
+            ),
+            Key([], "t", lazy.spawn("gnome-text-editor"), desc="Launch text editor"),
+            Key([], "v", lazy.spawn("code"), desc="Launch VSCode"),
+            Key([], "w", lazy.spawn("gnome-weather"), desc="Launch weather"),
+            Key([], "z", lazy.spawn("zen-browser"), desc="Launch zen-browser"),
         ],
         name="E",
     ),
@@ -162,18 +220,19 @@ keys = [
         custom_keys,
         name="W",
     ),
-    # KeyChord(
-    #     [mod],
-    #     "y",
-    #     [
-    #         Key([], "e", lazy.group.setlayout("treetab")),
-    #         Key([], "c", lazy.group.setlayout("columns")),
-    #         Key([], "t", lazy.group.setlayout("monadtall")),
-    #         Key([], "m", lazy.group.setlayout("max")),
-    #         Key([], "z", lazy.group.setlayout("zoomy")),
-    #     ],
-    #     name="Y",
-    # ),
+    KeyChord(
+        [mod],
+        "y",
+        [
+            Key([], "c", lazy.group.setlayout("columns")),
+            Key([], "l", lazy.group.setlayout("tile")),
+            Key([], "m", lazy.group.setlayout("monadtall")),
+            Key([], "t", lazy.group.setlayout("treetab")),
+            Key([], "w", lazy.group.setlayout("monadwide")),
+            Key([], "z", lazy.group.setlayout("zoomy")),
+        ],
+        name="Y",
+    ),
     #### Multimedia keys ####
     # Volume
     Key([], "XF86AudioMute", lazy.spawn("pamixer -t")),
@@ -249,20 +308,20 @@ layouts = [
         border_width=3,
         margin=15,
     ),
-    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(
-    #     min_secondary_size=10,
-    # ),
-    # layout.MonadWide(),
+    layout.MonadTall(
+        min_secondary_size=10,
+    ),
+    layout.MonadWide(),
     # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
+    layout.Tile(),
+    layout.TreeTab(),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Zoomy(),
+    layout.Max(),
 ]
 
 widget_defaults = dict(
@@ -297,6 +356,8 @@ screens = [
                     fmt="{{{}}}",
                     chords_colors={
                         "E": ("#00000090", "#e67e80"),
+                        "W": ("#00000090", "#e69875"),
+                        "Y": ("#00000090", "#a7c080"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
@@ -307,7 +368,8 @@ screens = [
                 ),
                 widget.CheckUpdates(
                     colour_have_updates="#e67e80",
-                    custom_command="pikaur -Qu ",
+                    # custom_command="pikaur -Qu ",
+                    custom_command="pacman -Qu &>/dev/null; pikaur -Qu ",
                     display_format="   {updates}",
                     update_interval=600,
                     mouse_callbacks={
@@ -400,10 +462,18 @@ screens = [
                 ),
                 # widget.Sep(),
                 widget.Sep(),
-                widget.QuickExit(
-                    default_text="  ",
-                    countdown_format="[{}]",
+                widget.TextBox(
+                    text="  ",
+                    mouse_callbacks={
+                        "Button1": lazy.spawn(
+                            "zsh -c ~/.config/qtile/src/rofi-power-menu.sh"
+                        )
+                    },
                 ),
+                # widget.QuickExit(
+                #     default_text="  ",
+                #     countdown_format="[{}]",
+                # ),
             ],
             38,
             background="#00000090",
@@ -449,6 +519,9 @@ floating_layout = layout.Floating(
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
         Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(wm_class="translate.google.com"),
+        Match(wm_class="gnome-calculator"),
+        Match(wm_class="nl.hjdskes.gcolor3"),
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ]

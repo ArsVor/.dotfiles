@@ -14,6 +14,9 @@ return {
   },
   config = function()
     require('noice').setup {
+      -- messages = {
+      --   enabled = false,
+      -- },
       lsp = {
         progress = {
           enabled = true,

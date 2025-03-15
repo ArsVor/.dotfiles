@@ -36,6 +36,7 @@ if [[ $- == *i* ]] && [[ -z $FASTFETCH_RUN ]]; then
 fi
 
 #### Source ####
+source "$HOME/.config/xsecurelock/xsecurelockrc"
 source "$HOME/.config/alias.list"
 source "$ZSHCONFDIR/zsh-functions"
 
