@@ -13,7 +13,7 @@ set -e
 set -u
 
 # All supported choices
-all=(lockscreen logout suspend reboot shutdown)
+all=(lockscreen suspend logout reboot shutdown)
 
 # By default, show all (i.e., just copy the array)
 show=("${all[@]}")
