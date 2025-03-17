@@ -6,10 +6,7 @@ sleep 1.5
 
 xdotool set_desktop 1
 ~/.scr/lounch_gpt.sh
-sleep 1.5
-
-xdotool set_desktop 3
-/usr/bin/microsoft-edge-stable &
+/usr/bin/zen-browser &
 sleep 1.5
 
 xdotool set_desktop 2

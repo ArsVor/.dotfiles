@@ -36,16 +36,18 @@ modkey = "mod1"
 terminal = "kitty"
 calculator = "gnome-calculator"
 calendar = "gnome-calendar"
-browser = "microsoft-edge-stable"
+browser = ""
+browser = "zen-browser"
 gpt_chat = "gpt"
 google_translate = "tsl"
-outlook = "mail"
+mail = "thunderbird"
 
 
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.call(home)
+    subprocess.Popen(["libinput-gestures-setup", "start"])
 
 
 @hook.subscribe.client_managed
@@ -188,11 +190,12 @@ keys = [
     # Run and quit
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "mod1"], "space", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("rofi -show drun"), desc="Launch drun"),
     Key([mod], "a", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "c", lazy.spawn(calculator), desc="Launch calculator"),
     Key([mod], "g", lazy.spawn(gpt_chat), desc="Launch gpt_chat"),
-    Key([mod], "m", lazy.spawn(outlook), desc="Launch outlook"),
+    Key([mod], "m", lazy.spawn(mail), desc="Launch mail"),
     Key([mod], "o", lazy.spawn("obsidian"), desc="Launch obsidian"),
     Key([mod], "t", lazy.spawn(google_translate), desc="Launch google_translate"),
     KeyChord(
@@ -202,7 +205,13 @@ keys = [
             Key([], "c", lazy.spawn("gcolor3"), desc="Launch color picker"),
             Key(["shift"], "c", lazy.spawn("gnome-contacts"), desc="Launch contacts"),
             Key([], "d", lazy.spawn(calendar), desc="Launch calendar"),
-            Key([], "e", lazy.spawn("rofi -show drun"), desc="Launch drun"),
+            # Key([], "e", lazy.spawn("rofi -show drun"), desc="Launch drun"),
+            Key(
+                [],
+                "e",
+                lazy.spawn("microsoft-edge-stable"),
+                desc="Launch microsoft-edge",
+            ),
             Key([], "f", lazy.spawn("nautilus"), desc="Launch nautilus"),
             Key([], "g", lazy.spawn("google-chrome"), desc="Launch google chrome"),
             Key([], "h", lazy.spawn("rofi -show ssh"), desc="Launch ssh connector"),
@@ -217,7 +226,6 @@ keys = [
             Key([], "t", lazy.spawn("gnome-text-editor"), desc="Launch text editor"),
             Key([], "v", lazy.spawn("code"), desc="Launch VSCode"),
             Key([], "w", lazy.spawn("gnome-weather"), desc="Launch weather"),
-            Key([], "z", lazy.spawn("zen-browser"), desc="Launch zen-browser"),
         ],
         name="E",
     ),
@@ -378,7 +386,7 @@ screens = [
                     # custom_command="pikaur -Qu ",
                     custom_command="~/.config/qtile/update_check.sh ",
                     display_format="   {updates}",
-                    update_interval=600,
+                    update_interval=6000,
                     mouse_callbacks={
                         "Button1": lazy.spawn(
                             "zsh -c ~/.config/qtile/src/qtile_update.sh"
@@ -528,6 +536,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(wm_class="translate.google.com"),
         Match(wm_class="gnome-calculator"),
+        Match(wm_class="Msgcompose"),
         Match(wm_class="nl.hjdskes.gcolor3"),
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry

@@ -131,6 +131,21 @@ function fzf-ps-widget () {
     zle reset-prompt
 }
 
+function als () {
+    local result=$(cat ~/.config/alias.list | rg '=' | sed 's/ /~~/' | sed 's/=/~~/' | sed 's/##/~~/' | awk -F ~~ '
+               {printf "%-10s %-100s ~~%s\n", $2, $3, $4
+                }' | fzf --reverse --no-multi --header="als         cmd" --preview="echo {} | awk -F \"~~\" '
+                {print \$NF}' | fold -s -w 48" --preview-window=right:40%,wrap | awk '{print $1}')
+        
+
+
+    [[ -z "$result" ]] && zle reset-prompt && return
+
+    LBUFFER="${result} "
+    
+    zle reset-prompt
+}
+
 #### Cusstom commands ####
 
 function ct () {

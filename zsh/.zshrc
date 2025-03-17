@@ -106,11 +106,13 @@ zle -N fzf-ps-widget
 zle -N fzf-file-widget-default
 zle -N fzf-file-widget-ctrl-f
 zle -N fzf-dir-widget
+zle -N als
 
 bindkey '^p' fzf-ps-widget
 bindkey '^t' fzf-file-widget-default
 bindkey '^f' fzf-file-widget-ctrl-f
 bindkey '^d' fzf-dir-widget
+bindkey '\ea' als
 
 #### Tmux session auto start ####
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then

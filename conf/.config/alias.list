@@ -60,7 +60,7 @@ alias ...="cd ../../ " ## Navigate 2 step back in the directory hierarchy (If th
 alias ..3="cd ../../../ " ## Navigate 3 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
 alias ..4="cd ../../../../ " ## Navigate 4 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
 alias ..5="cd ../../../../../ " ## Navigate 5 step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
-# alias ..n="..n N" ## Navigate N step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
+# ..n="..n N" ## Navigate N step back in the directory hierarchy (If the current directory has fewer levels than needed, the command will navigate to the root directory / instead.)
 alias cdb="cd ~/.local/bin/ " ## Navigate to the $HOME/.local/bin/ directory.
 alias cdc="cd ~/.config/ " ## Navigate to the $HOME/.config/ directory.
 alias cdd="cd ~/.dotfiles/ " ## Navigate to the $HOME/.dotfiles/ directory.
@@ -93,7 +93,7 @@ alias gwp="glow -p " ## View .md file with pager (In view window).
 alias mybnd="glow -p ~/.config/shortcats.md" ## View keyboard shortcats.
 
 # other
-# alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
+#alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
 alias confa='$EDITOR ~/.config/alias.list' ## Open the 'alias.list' in your standart text editor.
 alias confb='$EDITOR ~/.bashrc' ## Open the '.bashrc' in your standart text editor.
 alias confs='$EDITOR ~/.shrc' ## Open the X in your standart text editor.
@@ -110,12 +110,12 @@ alias scr="~/.scr/add_script_file.sh " ## Creates a new executable file with the
 
 # python
 alias py="python" ## Run python current version 
-# pyrun="pyenv activate " ## List all avaliable Python virtualenvs with fzf (virtualenv name must started with "py") and activate selected. Func in config file.
-# alias pyoff="pyenv deactivate" ## Deactivate virtualenv
+#pyrun="pyenv activate " ## List all avaliable Python virtualenvs with fzf (virtualenv name must started with "py") and activate selected. Func in config file.
+#alias pyoff="pyenv deactivate" ## Deactivate virtualenv
 alias echoenv='echo $VIRTUAL_ENV' ## Print active virtualenv version path
-# alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
-# alias vrun="source ./venv/bin/activate.fish" ## Activate python venv based in current directory
-# alias voff="deactivate" ## Deactivate python venv
+#alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
+alias vrun="source ./venv/bin/activate" ## Activate python venv based in current directory
+alias voff="deactivate" ## Deactivate python venv
 
 # django
 alias run='python manage.py runserver' ## Abbr for "python manage.py runserver" usable in venv with the installed gjango.
