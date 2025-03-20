@@ -8,14 +8,16 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- cmd mode
 vim.api.nvim_set_keymap('n', '<CR>', ':', { noremap = true, silent = false, desc = 'Command mode' })
 
--- Line End
-vim.keymap.set({ 'n', 'v' }, ';', '$', { noremap = true, silent = false, desc = 'End of line' })
-
 -- Close Insert Mode
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = false, desc = 'Close Insert Mode' })
 
+-- Go to prev Buffer
+vim.keymap.set('n', '<leader>,', '<C-^>', { noremap = true, silent = true, desc = '[,] Go to prev file' })
+
 -- Copy % register (current file path) to the + register (system clipboard)
-vim.keymap.set('n', '<leader>cf', '<cmd> let @+=@% <CR>', { noremap = true, silent = false, desc = '[C]opy [F]ile path to the + register' })
+vim.keymap.set('n', '<leader>cp', '<cmd> let @+=@% <CR>', { noremap = true, silent = false, desc = '[C]opy file [P]ath to the + register' })
+-- Copy current file name to the + register (system clipboard)
+vim.keymap.set('n', '<leader>cn', '<cmd> let @+=expand("%:t") <CR>', { noremap = true, silent = false, desc = '[C]opy file [N]ame to the + register' })
 
 -- -- save file
 -- vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', { noremap = true, silent = false, desc = '[S]ave file' })

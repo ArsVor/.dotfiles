@@ -47,7 +47,7 @@ mail = "thunderbird"
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.call(home)
-    subprocess.Popen(["libinput-gestures-setup", "start"])
+    # subprocess.Popen(["libinput-gestures-setup", "start"])
 
 
 @hook.subscribe.client_managed

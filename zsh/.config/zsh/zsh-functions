@@ -213,6 +213,30 @@ function ..n () {
     cd $cmd
 }
 
+function tmuxO () {
+    FLAG="$1"
+    SESSION_NAME="$2"
+
+    if [[ -z $FLAG ]]; then
+        echo "Error: [OPTION] missed"
+        return 1
+    fi
+        
+
+    if [[ -z $SESSION_NAME ]] && SESSION_NAME=$(pwd | awk -F "/" '{print $NF}')
+
+    case $FLAG in
+        -p) 
+            ~/.scr/tmux/open_project.sh "$SESSION_NAME""_project";;
+        -s)
+            tmux new-session -s "$SESSION_NAME""_simple";;
+        *) 
+            echo "Error: Unknown option '$FLAG'"
+            return 1;;
+    esac
+
+}
+
 # function pyrun  () {
 #     pyenv activate $(ls /home/ars/.pyenv/versions | rg py | awk '{print $1}' | fzf --cycle --height=25% --reverse)
 # }

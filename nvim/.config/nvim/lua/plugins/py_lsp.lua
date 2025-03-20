@@ -4,15 +4,30 @@ return {
   -- tag = "v0.0.1"
 
   config = function()
-    local function is_virtualenv_available()
+    -- Функція для перевірки, чи існує venv у вказаному каталозі
+    local function find_venv()
       local cwd = vim.fn.getcwd()
-      return vim.fn.executable(cwd .. '/venv/bin/python') == 1 or vim.fn.executable(cwd .. '/.venv/bin/python') == 1
+      local parent = vim.fn.fnamemodify(cwd, ':h') -- Отримуємо один рівень вище
+      if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+        return 'venv'
+      elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+        return '.venv'
+      elseif vim.fn.executable(parent .. '/venv/bin/python') == 1 then
+        return '../venv'
+      elseif vim.fn.executable(parent .. '/.venv/bin/python') == 1 then
+        return '../.venv'
+      end
+      return nil
     end
-    if is_virtualenv_available() then
+
+    -- Шукаємо venv у поточній директорії або на рівень вище
+    local venv_path = find_venv() or find_venv()
+
+    -- Якщо знайдено, передаємо його у py_lsp
+    if venv_path then
       require('py_lsp').setup {
-        -- This is optional, but allows to create virtual envs from nvim
         host_python = '/home/ars/.pyenv/shims/python',
-        default_venv_name = 'venv', -- For local venv
+        default_venv_name = venv_path, -- Передаємо повний шлях до venv
         language_server = 'pyright',
         source_strategies = { 'poetry', 'default', 'system' },
       }
