@@ -35,6 +35,7 @@ alias gbdelf="git branch -D " ## need add fzf Delete a branch force. (type "gb -
 alias gs="git status -s" ## Show the working tree status. Give the output in the short-format.
 alias gsl="git status" ## Show the working tree status. (type "gsl --help" for detail)
 alias gct="git commit -m " ## Record changes to the local repository. Use the given <"msg"> as the commit message. If multiple -m options are given (gct <"msg1"> -m <"msg2">), their values are concatenated as separate paragraphs. (type "git commit --help" for detail)
+alias gce="git commit --edit " ## Record changes to the local repository. Edit the commit message before committing (open $EDITOR)
 alias gcte="git commit --allow-empty " ## Record to the local repository with no changes.
 alias gctem="git commit --allow-empty-message --no-edit" ## Record changes to the repository with empty message.
 alias gctam="git commit --amend " ## Edit last commit message. (gctam -m <"New msg"> - to change without editor)

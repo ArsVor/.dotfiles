@@ -1,0 +1,13 @@
+[Unit]
+Description=Libinput Gestures
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/libinput-gestures
+Restart=always
+RestartSec=5s
+Environment=DISPLAY=:0
+Environment=XDG_SESSION_TYPE=x11
+
+[Install]
+WantedBy=default.target
