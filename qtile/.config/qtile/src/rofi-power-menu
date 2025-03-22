@@ -47,7 +47,7 @@ icons[cancel]="\Uf0156"
 # icons[switchuser]="\Uf0019"
 
 declare -A actions
-actions[lockscreen]="xset s activate"
+actions[lockscreen]="xautolock -locknow"
 #actions[switchuser]="???"
 # actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
 actions[suspend]="systemctl suspend"

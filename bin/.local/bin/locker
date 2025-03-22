@@ -1,0 +1,11 @@
+#! /usr/bin/sh
+
+exec xautolock -detectsleep -time 60 -locker "~/.local/bin/lock" \
+    -notify 30 -notifier "notify-send -u critical -t 30000 -- 'It will be locked, by the way!'" &
+
+# Автоматичне блокування перед сном (без таймерів)
+exec xss-lock --transfer-sleep-lock -- ~/.local/bin/lock &
+
+xidlehook --not-when-fullscreen --not-when-audio \
+    --timer 600 "xautolock -locknow" "" \
+    --timer 660 "systemctl suspend" "" &

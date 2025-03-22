@@ -1,0 +1,8 @@
+#! /usr/bin/sh
+
+rm ~/tmp/screenshots/screenshot.png
+scrot ~/tmp/screenshots/screenshot.png
+convert ~/tmp/screenshots/screenshot.png -blur 0x30 ~/tmp/screenshots/screenshotblur.png
+convert ~/tmp/screenshots/screenshotblur.png ~/Pictures/wallpaper/Arch_logo.png -gravity center -composite -matte ~/tmp/screenshots/screnlock.png
+i3lock -i ~/tmp/screenshots/screnlock.png
+# feh ~/tmp/screenshots/screnlock.png

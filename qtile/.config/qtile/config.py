@@ -98,10 +98,8 @@ keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod, "control"], "s", lazy.spawn("systemctl suspend"), desc="Lock screen"),
     Key(
-        [mod],
+        [mod, "shift"],
         "p",
         lazy.spawn("sh -c '~/.config/qtile/src/rofi-power-menu.sh'"),
         desc="Power menu",
@@ -228,6 +226,18 @@ keys = [
             Key([], "w", lazy.spawn("gnome-weather"), desc="Launch weather"),
         ],
         name="E",
+    ),
+    KeyChord(
+        [mod],
+        "p",
+        [
+            Key([], "l", lazy.spawn("xautolock -locknow"), desc="[L]ock screen"),
+            Key([], "s", lazy.spawn("systemctl suspend"), desc="[S]uspend"),
+            Key([], "q", lazy.shutdown(), desc="Shutdown [Q]tile"),
+            Key([], "r", lazy.spawn("systemctl reboot"), desc="[R]eboot"),
+            Key([], "o", lazy.spawn("systemctl poweroff"), desc="Power [O]ff"),
+        ],
+        name="P",
     ),
     KeyChord(
         [mod],
@@ -365,12 +375,18 @@ screens = [
                 widget.Prompt(),
                 # widget.WindowName(),
                 widget.Spacer(length=bar.STRETCH),
-                widget.Clock(format="%a %d %b %H:%M"),
+                widget.Clock(
+                    format="%a %d %b %H:%M",
+                    mouse_callbacks={
+                        "Button1": lazy.spawn(calendar),
+                    },
+                ),
                 widget.Spacer(length=bar.STRETCH),
                 widget.Chord(
                     fmt="{{{}}}",
                     chords_colors={
-                        "E": ("#00000090", "#e67e80"),
+                        "P": ("#00000090", "#e67e80"),
+                        "E": ("#00000090", "#7fbbb3"),
                         "W": ("#00000090", "#e69875"),
                         "Y": ("#00000090", "#a7c080"),
                     },
@@ -386,7 +402,7 @@ screens = [
                     # custom_command="pikaur -Qu ",
                     custom_command="~/.config/qtile/update_check.sh ",
                     display_format="   {updates}",
-                    update_interval=6000,
+                    update_interval=7200,
                     mouse_callbacks={
                         "Button1": lazy.spawn(
                             "zsh -c ~/.config/qtile/src/qtile_update.sh"
