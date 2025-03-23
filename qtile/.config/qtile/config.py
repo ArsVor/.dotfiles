@@ -231,7 +231,6 @@ keys = [
             Key([], "c", lazy.spawn("gcolor3"), desc="Launch color picker"),
             Key(["shift"], "c", lazy.spawn("gnome-contacts"), desc="Launch contacts"),
             Key([], "d", lazy.spawn(calendar), desc="Launch calendar"),
-            # Key([], "e", lazy.spawn("rofi -show drun"), desc="Launch drun"),
             Key(
                 [],
                 "e",
@@ -240,9 +239,7 @@ keys = [
             ),
             Key([], "f", lazy.spawn("nautilus"), desc="Launch nautilus"),
             Key([], "g", lazy.spawn("google-chrome"), desc="Launch google chrome"),
-            Key([], "h", lazy.spawn("rofi -show ssh"), desc="Launch ssh connector"),
             Key([], "m", lazy.spawn("gnome-maps"), desc="Launch maps"),
-            Key([], "r", lazy.spawn("rofi -show run"), desc="Launch executable"),
             Key(
                 [],
                 "s",
@@ -266,6 +263,22 @@ keys = [
             Key([], "o", lazy.spawn("systemctl poweroff"), desc="Power [O]ff"),
         ],
         name="P",
+    ),
+    KeyChord(
+        [mod],
+        "r",
+        [
+            Key(
+                [],
+                "c",
+                lazy.spawn("zsh -c ~/.config/qtile/src/rofi-config-files.sh &"),
+                desc="Open .dotfiles",
+            ),
+            Key([], "e", lazy.spawn("rofi -show drun"), desc="Launch drun"),
+            Key([], "s", lazy.spawn("rofi -show ssh"), desc="Launch ssh connector"),
+            Key([], "r", lazy.spawn("rofi -show run"), desc="Launch executable"),
+        ],
+        name="R",
     ),
     KeyChord(
         [mod],
@@ -415,6 +428,7 @@ screens = [
                     chords_colors={
                         "P": ("#00000090", "#e67e80"),
                         "E": ("#00000090", "#7fbbb3"),
+                        "R": ("#00000090", "#3a515d"),
                         "W": ("#00000090", "#e69875"),
                         "Y": ("#00000090", "#a7c080"),
                     },
