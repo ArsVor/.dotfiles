@@ -72,6 +72,22 @@ def toggle_max_layout(qtile):
         qtile.current_group.setlayout("max")
 
 
+def alter_column_switch_focus(qtile, direction):
+    current_layout = qtile.current_layout.name
+
+    if current_layout != "columns":
+        return
+
+    qtile.current_layout.next()
+    if direction == "up":
+        qtile.current_layout.up()
+    elif direction == "down":
+        qtile.current_layout.down()
+    else:
+        return
+    qtile.current_layout.next()
+
+
 groups = [Group(i) for i in "123456789"]
 custom_keys = []
 for i in groups:
@@ -160,6 +176,18 @@ keys = [
         "z",
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
+    ),
+    Key(
+        [mod, "mod1"],
+        "k",
+        lazy.function(lambda qtile: alter_column_switch_focus(qtile, "up")),
+        desc="Focus up in alter stack",
+    ),
+    Key(
+        [mod, "mod1"],
+        "j",
+        lazy.function(lambda qtile: alter_column_switch_focus(qtile, "down")),
+        desc="Focus down in alter stack",
     ),
     # MonadTall keybindings
     Key([modkey], "i", lazy.layout.grow()),
