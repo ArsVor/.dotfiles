@@ -3,6 +3,7 @@ font = JatBrainsMono 24
 padding = 10
 horizontal_padding = 10
 transparency = 70
+layer = overlay
 width = (300, 1000)
 origin = top-center
 corner_radius = 30

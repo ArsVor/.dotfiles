@@ -213,7 +213,22 @@ function ..n () {
     cd $cmd
 }
 
-function tmuxO () {
+function setcp () {
+    local PROJECT=$(pwd)
+    echo "export CURRENT_PROJECT=$PROJECT" > $ZSHCONFDIR/current-project-env
+    export CURRENT_PROJECT=$PROJECT
+    echo "CURRENT_PROJECT is set to: $PROJECT"
+}
+
+function getcp () {
+    if [[ $CURRENT_PROJECT ]]; then
+        echo $CURRENT_PROJECT
+    else
+        echo "Current project is unset"
+    fi
+}
+
+function tux () {
     FLAG="$1"
     SESSION_NAME="$2"
 
@@ -226,6 +241,18 @@ function tmuxO () {
     if [[ -z $SESSION_NAME ]] && SESSION_NAME=$(pwd | awk -F "/" '{print $NF}')
 
     case $FLAG in
+        -c) 
+            if [[ -z $CURRENT_PROJECT ]]; then
+                echo "Error: Current project is unset"
+                return 1
+            elif ! [[ -d $CURRENT_PROJECT ]]; then
+                echo "Error: Current project is set to `$CURRENT_PROJECT`, but path does not exist"
+                return 1
+            else
+                cd $CURRENT_PROJECT
+                SESSION_NAME=$(echo $CURRENT_PROJECT | awk -F "/" '{print $NF}')
+                ~/.scr/tmux/open_project.sh "$SESSION_NAME"
+            fi;;
         -p) 
             ~/.scr/tmux/open_project.sh "$SESSION_NAME""_project";;
         -s)

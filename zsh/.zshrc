@@ -40,6 +40,7 @@ source "$HOME/.config/alias.list"
 source "$ZSHCONFDIR/zsh-functions"
 
 zsh_add_source "zsh-aliases"
+zsh_add_source "current-project-env"
 
 zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
