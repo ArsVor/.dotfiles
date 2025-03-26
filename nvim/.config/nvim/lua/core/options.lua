@@ -43,4 +43,4 @@ vim.opt.formatoptions:remove { 'c', 'r', 'o' } -- Don't insert the current comme
 vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins from Neovim in case Vim still in use (default: includes this path if Vim is installed)
 vim.g.VM_mouse_mappings = 1
 vim.o.fixendofline = true
-_G.autosave_status = true
+_G.autosave_status = false

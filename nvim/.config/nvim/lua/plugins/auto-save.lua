@@ -16,17 +16,7 @@ return {
     cmd = 'ASToggle', -- optional for lazy loading on command
     event = { 'InsertLeave', 'TextChanged' }, -- optional for lazy loading on trigger events
     opts = {
-      enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-
-      -- INFO: Do not worck!!!gvk
-      -- execution_message = {
-      --   enabled = true,
-      --   message = function() -- message to print on save
-      --     return ('AutoSave: saved at ' .. vim.fn.strftime '%H:%M:%S')
-      --   end,
-      --   dim = 0.18, -- dim the color of `message`
-      --   cleaning_interval = 11250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
-      -- },
+      enabled = false, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
 
       trigger_events = { -- See :h events
         immediate_save = { 'BufLeave', 'FocusLost' }, -- vim events that trigger an immediate save

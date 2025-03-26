@@ -11,7 +11,6 @@ source <(fzf --zsh)
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
-
 # User specific environment
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH="$HOME/.local/bin:$PATH"
@@ -95,6 +94,7 @@ if [[ -o menucomplete ]]; then
   bindkey -M menuselect 'j' vi-down-line-or-history
 fi
 
+zle -N vi-yank vi_yank_clipboard
 zle -N trig_vi_escape
 bindkey -M viins 'j' trig_vi_escape
 zle -N zle-keymap-select

@@ -1,5 +1,11 @@
 #! /usr/bin/sh
 
+layout=$(qtile cmd-obj -o widget keyboardlayout -f info | rg text | awk '{print $3}' | sed -e "s/',//")
+
+if [[ "$layout" == "uk" ]]; then
+    qtile cmd-obj -o widget keyboardlayout -f next_keyboard
+fi
+
 rm ~/tmp/screenshots/screenshot.png
 scrot ~/tmp/screenshots/screenshot.png
 convert ~/tmp/screenshots/screenshot.png -blur 0x30 ~/tmp/screenshots/screenshotblur.png

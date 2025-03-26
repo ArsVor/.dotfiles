@@ -66,6 +66,16 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 
+# copy to system clipboard
+vi_yank_clipboard() {
+    zle .vi-yank
+    if [[ -n "$WAYLAND_DISPLAY" ]]; then
+        print -rn -- "$CUTBUFFER" | wl-copy
+    else
+        print -rn -- "$CUTBUFFER" | xclip -i -selection clipboard
+    fi
+}
+
 #### Sesh zle functions #### 
 function sesh-sessions() {
   {
