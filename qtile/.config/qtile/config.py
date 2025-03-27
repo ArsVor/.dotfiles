@@ -223,6 +223,7 @@ keys = [
     Key([mod], "g", lazy.spawn(gpt_chat), desc="Launch gpt_chat"),
     Key([mod], "m", lazy.spawn(mail), desc="Launch mail"),
     Key([mod], "o", lazy.spawn("obsidian"), desc="Launch obsidian"),
+    Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), desc="Screenshot"),
     Key([mod], "t", lazy.spawn(google_translate), desc="Launch google_translate"),
     KeyChord(
         [mod],
