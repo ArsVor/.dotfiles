@@ -57,6 +57,25 @@ return {
       cond = hide_in_width,
     }
 
+    local permissions = function()
+      local filetype = vim.bo.filetype
+      local exec_types = { 'sh', 'zsh', 'bash', 'fish' }
+      for _, ftype in pairs(exec_types) do
+        if ftype == filetype then
+          local filepath = vim.fn.expand '%:p'
+          local handle = io.popen('ls -l ' .. vim.fn.shellescape(filepath) .. " | awk '{print $1}'")
+          if handle ~= nil then
+            local permission = handle:read('*a'):gsub('%s+', '') -- Видаляємо зайві пробіли/нові рядки
+            handle:close()
+            return permission
+          end
+        end
+      end
+    end
+
+    local show_permissions = function()
+      return vim.fn.winwidth(0) > 100 and permissions() ~= nil
+    end
     -- sections = { lualine_z = { 'progress' } }
 
     require('lualine').setup {
@@ -84,6 +103,7 @@ return {
           diagnostics,
           diff,
           { 'encoding', cond = hide_in_width },
+          { permissions, cond = show_permissions },
           { 'filetype', cond = hide_in_width },
         },
         lualine_y = { 'location' },
