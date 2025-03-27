@@ -117,7 +117,7 @@ bindkey '\ea' als
 
 #### Tmux session auto start ####
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach-session -t default || tmux new-session -d -s default
+  tmux new-session -A -s default
 fi
 
 

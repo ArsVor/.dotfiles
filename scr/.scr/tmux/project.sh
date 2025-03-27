@@ -29,9 +29,9 @@ if [[ $VENV != "nill" ]]; then
 	tmux send-keys -t $SESSION:1.2 "source $VENV/bin/activate" C-m
 fi
 tmux resize-pane -Z -t $SESSION:1.1
-tmux new-window -n zsh
+tmux new-window -n zsh -t $SESSION
 if [[ $GIT_DIR ]]; then
-	tmux new-window -n Git
+	tmux new-window -n Git -t $SESSION
 
 	if [[ $GIT_DIR != ".git/" ]]; then
 		tmux send-keys -t $SESSION:3.1 "cd $GIT_DIR" C-m
@@ -39,4 +39,9 @@ if [[ $GIT_DIR ]]; then
 
 	tmux send-keys -t $SESSION:3.1 "lg" C-m
 fi
-tmux -2 attach -t $SESSION:1
+
+if [[ $(echo $TMUX) ]]; then
+	tmux switch-client -t $SESSION:1
+else
+	tmux -2 attach -t $SESSION:1
+fi

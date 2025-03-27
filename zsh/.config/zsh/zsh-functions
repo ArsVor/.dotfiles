@@ -248,7 +248,7 @@ function tux () {
     fi
         
 
-    if [[ -z $SESSION_NAME ]] && SESSION_NAME=$(pwd | awk -F "/" '{print $NF}')
+    if [[ -z $SESSION_NAME ]] && SESSION_NAME=$(pwd | awk -F "/" '{print $NF}' | sed s/\\./_/)
 
     case $FLAG in
         -c) 
@@ -260,13 +260,13 @@ function tux () {
                 return 1
             else
                 cd $CURRENT_PROJECT
-                SESSION_NAME=$(echo $CURRENT_PROJECT | awk -F "/" '{print $NF}')
-                ~/.scr/tmux/open_project.sh "$SESSION_NAME"
+                SESSION_NAME=$(echo $CURRENT_PROJECT | awk -F "/" '{print $NF}' | sed s/\\./_/)
+                ~/.scr/tmux/project.sh "$SESSION_NAME"
             fi;;
         -p) 
-            ~/.scr/tmux/open_project.sh "$SESSION_NAME""_project";;
+            ~/.scr/tmux/project.sh "$SESSION_NAME""_project";;
         -s)
-            tmux new-session -s "$SESSION_NAME""_simple";;
+            ~/.scr/tmux/simple.sh "$SESSION_NAME""_simple";;
         *) 
             echo "Error: Unknown option '$FLAG'"
             return 1;;
