@@ -4,10 +4,7 @@ SESSION="$1"
 GIT_DIR=$(fd -H -d=2 "\\.git\$"  | sed -r 's/\/.git\///')
 WD=$(pwd)
 PD=$(dirname $WD)
-# echo $GIT_DIR
-# echo $WD
-# echo $PD
-# exit 0
+
 
 if [[ -d $WD/venv ]]; then
 	VENV="./venv"
@@ -26,6 +23,7 @@ tmux split-window -v -t $SESSION:1.1
 if [[ $VENV != "nill" ]]; then
 	tmux send-keys -t $SESSION:1.1 "source $VENV/bin/activate" C-m
 	tmux send-keys -t $SESSION:1.1 "v" C-m
+	tmux send-keys -t $SESSION:1.1 ":AutoSelectSystemVenv" C-m
 	tmux send-keys -t $SESSION:1.2 "source $VENV/bin/activate" C-m
 fi
 tmux resize-pane -Z -t $SESSION:1.1

@@ -26,8 +26,9 @@ require('lazy').setup {
   -- *** --
   -- Modules
   require 'plugins.alpha',
-  require 'plugins.autocompletion',
+  -- require 'plugins.autocompletion',
   require 'plugins.auto-save',
+  require 'plugins.blink-cmp',
   -- require 'plugins.bufferline',
   require 'plugins.comment',
   require 'plugins.debug',

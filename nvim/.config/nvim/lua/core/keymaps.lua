@@ -4,9 +4,13 @@ vim.g.maplocalleader = ' '
 
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set('i', '<C-h>', '<Left>', { silent = true })
+vim.keymap.set('i', '<C-j>', '<Down>', { silent = true })
+vim.keymap.set('i', '<C-k>', '<Up>', { silent = true })
+vim.keymap.set('i', '<C-l>', '<Right>', { silent = true })
 
 -- cmd mode
-vim.api.nvim_set_keymap('n', '<CR>', ':', { noremap = true, silent = false, desc = 'Command mode' })
+-- vim.api.nvim_set_keymap('n', '<CR>', ':', { noremap = true, silent = false, desc = 'Command mode' })
 
 -- Close Insert Mode
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = false, desc = 'Close Insert Mode' })
@@ -111,4 +115,9 @@ vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]i
 vim.keymap.set('n', '<leader>rr', ':Rest run<CR>', { noremap = true, silent = false, desc = '[R]est [R]un under the cusror' })
 
 -- Quick Fix autoimport for Python
-vim.api.nvim_set_keymap('n', '<leader>cq', '<cmd>lua require("plugins.custom.autoimport").show_auto_imports()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>cq',
+  '<cmd>lua require("plugins.custom.autoimport").show_auto_imports()<CR>',
+  { noremap = true, silent = true, desc = '[Q]uickFix autoimport' }
+)

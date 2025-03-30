@@ -12,7 +12,8 @@ return {
     { 'j-hui/fidget.nvim', opts = {} },
 
     -- Allows extra capabilities provided by nvim-cmp
-    'hrsh7th/cmp-nvim-lsp',
+    -- 'hrsh7th/cmp-nvim-lsp',
+    'saghen/blink.cmp',
     { 'folke/neodev.nvim', opts = {} },
     { 'antosha417/nvim-lsp-file-operations', config = true },
   },
@@ -142,8 +143,15 @@ return {
     --  By default, Neovim doesn't support everything that is in the LSP specification.
     --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
     --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+    --  NOTE: nvim-cmp capabilities
+    --
+    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+    --  NOTE: blink.cmp capabilities
+    --
+    local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require('blink.cmp').get_lsp_capabilities(default_capabilities)
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -154,24 +162,14 @@ return {
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-    local pythonPath = function()
-      local cwd = vim.fn.getcwd()
-      if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
-        return cwd .. '/venv/bin/python'
-      elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
-        return cwd .. '/.venv/bin/python'
-      else
-        return '/home/ars/.pyenv/shims/python'
-      end
-    end
 
     local servers = {
       -- clangd = {},
       -- gopls = {},
       pyright = {
+        root_dir = vim.fn.getcwd(),
         settings = {
           python = {
-            pythonPath = pythonPath(),
             analysis = {
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,

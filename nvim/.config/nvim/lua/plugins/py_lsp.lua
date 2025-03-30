@@ -17,19 +17,20 @@ return {
       elseif vim.fn.executable(parent .. '/.venv/bin/python') == 1 then
         return '../.venv'
       end
-      return nil
+      return cwd
     end
 
     -- Шукаємо venv у поточній директорії або на рівень вище
-    local venv_path = find_venv() or find_venv()
+    local venv_path = find_venv()
 
     -- Якщо знайдено, передаємо його у py_lsp
     if venv_path then
       require('py_lsp').setup {
-        host_python = '/home/ars/.pyenv/shims/python',
-        default_venv_name = venv_path, -- Передаємо повний шлях до venv
+        host_python = vim.fn.systemlist('which python')[1],
+        default_venv_name = venv_path,
         language_server = 'pyright',
         source_strategies = { 'poetry', 'default', 'system' },
+        vim.keymap.set('n', '<leader>vp', '<cmd> PyLspFindVenvs <CR>', { noremap = true, silent = true, desc = '[V]envs [P]ython list' }),
       }
     end
   end,
