@@ -62,7 +62,7 @@ return {
             [']c'] = { query = '@class.outer', desc = 'Next class start' },
             --
             -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
-            [']o'] = '@loop.*',
+            [']r'] = '@loop.*',
             -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
             --
             -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
@@ -88,10 +88,10 @@ return {
           -- Use if you want more granular movements
           -- Make it even more gradual by adding multiple queries and regex.
           goto_next = {
-            [']d'] = '@conditional.outer',
+            [']o'] = '@conditional.outer',
           },
           goto_previous = {
-            ['[d'] = '@conditional.outer',
+            ['[o'] = '@conditional.outer',
           },
         },
       },
