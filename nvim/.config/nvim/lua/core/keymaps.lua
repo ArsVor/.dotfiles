@@ -4,6 +4,11 @@ vim.g.maplocalleader = ' '
 
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- Remap Create fold 'zf'
+vim.keymap.set('n', 'z+', 'zf', { remap = true, desc = 'Create fold' })
+
+-- Navigate in Inser Mode
 vim.keymap.set('i', '<C-h>', '<Left>', { silent = true })
 vim.keymap.set('i', '<C-j>', '<Down>', { silent = true })
 vim.keymap.set('i', '<C-k>', '<Up>', { silent = true })
@@ -14,6 +19,9 @@ vim.keymap.set('i', '<C-l>', '<Right>', { silent = true })
 
 -- Close Insert Mode
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = false, desc = 'Close Insert Mode' })
+
+-- Close Insert Mode and Save
+vim.keymap.set('i', 'jk', '<Esc>:write<CR>', { noremap = true, silent = false, desc = 'Close Insert Mode and Save' })
 
 -- Go to prev Buffer
 vim.keymap.set('n', '<leader>,', '<C-^>', { noremap = true, silent = true, desc = '[,] Go to prev file' })
@@ -106,8 +114,8 @@ vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = false, desc = '[P]as
 vim.keymap.set('n', '<leader>aa', '<cmd> %y <CR>', { noremap = true, silent = false, desc = 'Yank all' })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Open [F]loating [D]iagnostic message' })
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostics [L]ist' })
 

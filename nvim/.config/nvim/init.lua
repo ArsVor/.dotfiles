@@ -53,6 +53,7 @@ require('lazy').setup {
   require 'plugins.treesitter',
   require 'plugins.treesitter-textobject',
   require 'plugins.trouble',
+  require 'plugins.ufo',
   require 'plugins.vim-maximizer',
   require 'plugins.which-key',
 }
