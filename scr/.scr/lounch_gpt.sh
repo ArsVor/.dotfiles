@@ -1,6 +1,7 @@
 #!/bin/bash
 
-/bin/bash -c "/opt/google/chrome/google-chrome --profile-directory=Default --app=https://chat.openai.com & sleep 1.5 &&  wmctrl -r 'ChatGPT' -b add,maximized_vert,maximized_horz"
+/bin/bash -c "/usr/bin/chromium --profile-directory=Default --app=https://chat.openai.com & sleep 1.5 &&  wmctrl -r 'ChatGPT' -b add,maximized_vert,maximized_horz"
+# /bin/bash -c "/opt/google/chrome/google-chrome --profile-directory=Default --app=https://chat.openai.com & sleep 1.5 &&  wmctrl -r 'ChatGPT' -b add,maximized_vert,maximized_horz"
 
 # #Запускаємо PWA ChatGPT
 # google-chrome --new-window --app=https://chat.openai.com &
