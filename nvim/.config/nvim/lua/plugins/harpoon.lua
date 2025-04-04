@@ -15,12 +15,12 @@ return {
       },
     }
 
-    vim.keymap.set('n', '<leader>h', function()
+    vim.keymap.set('n', '<leader>hh', function()
       harpoon:list():add()
     end, { desc = 'add current buffer to [H]arpoon' })
-    vim.keymap.set('n', '<leader>m', function()
+    vim.keymap.set('n', '<leader>hm', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = 'Toggle harpoon [M]enu' })
+    end, { desc = 'Toggle [H]arpoon [M]enu' })
 
     vim.keymap.set('n', '<leader>1', function()
       harpoon:list():select(1)

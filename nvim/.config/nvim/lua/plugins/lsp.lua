@@ -150,8 +150,8 @@ return {
 
     --  NOTE: blink.cmp capabilities
     --
-    local default_capabilities = vim.lsp.protocol.make_client_capabilities()
-    local capabilities = require('blink.cmp').get_lsp_capabilities(default_capabilities)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    require('blink.cmp').get_lsp_capabilities(capabilities)
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.

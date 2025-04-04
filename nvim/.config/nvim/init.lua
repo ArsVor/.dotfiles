@@ -46,6 +46,7 @@ require('lazy').setup {
   require 'plugins.none-ls',
   require 'plugins.oil',
   require 'plugins.py_lsp',
+  require 'plugins.render-markdown',
   require 'plugins.rest',
   require 'plugins.spectre',
   require 'plugins.substitute',

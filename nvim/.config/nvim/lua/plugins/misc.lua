@@ -1,13 +1,6 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    opts = {},
-  },
-  {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',
   },

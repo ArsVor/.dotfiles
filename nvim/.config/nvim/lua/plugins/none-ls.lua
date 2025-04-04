@@ -20,6 +20,7 @@ return {
         'ruff', -- Python linter and formatter
         'djlint', -- htmldjango formatter
         'jq', -- json formatter
+        'mdformat', -- markdown formatter
         -- 'pylsp_mypy', -- Python linter and formatter
         -- 'pylsp_black', -- Python linter and formatter
         -- 'pylsp_isort', -- Python linter and formatter
@@ -29,7 +30,7 @@ return {
 
     local sources = {
       diagnostics.checkmake,
-      formatting.prettier.with { filetypes = { 'html', 'yaml', 'markdown' } },
+      formatting.prettier.with { filetypes = { 'html', 'yaml' } },
       formatting.djlint.with { filetypes = { 'htmldjango' } },
       formatting.stylua,
       formatting.shfmt.with { args = { '-i', '4' } },
