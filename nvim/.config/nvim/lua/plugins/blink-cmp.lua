@@ -1,7 +1,14 @@
 return {
   'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
-  dependencies = { 'rafamadriz/friendly-snippets', 'MahanRahmati/blink-nerdfont.nvim' },
+  dependencies = {
+    {
+      'Kaiser-Yang/blink-cmp-dictionary',
+      dependencies = { 'nvim-lua/plenary.nvim' },
+    },
+    'rafamadriz/friendly-snippets',
+    'MahanRahmati/blink-nerdfont.nvim',
+  },
 
   -- use a release tag to download pre-built binaries
   version = '1.*',
@@ -119,7 +126,7 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'nerdfont' },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'dictionary', 'nerdfont' },
       providers = {
         nerdfont = {
           module = 'blink-nerdfont',
@@ -134,6 +141,21 @@ return {
               vim.o.filetype
             )
           end,
+        },
+        dictionary = {
+          module = 'blink-cmp-dictionary',
+          name = 'Dict',
+          score_offset = -14,
+          -- Make sure this is at least 2.
+          -- 3 is recommended
+          min_keyword_length = 4,
+          opts = {
+            -- options for blink-cmp-dictionary
+            dictionary_files = {
+              vim.fn.expand '~/.config/nvim/dictionary/words_alpha.txt',
+              vim.fn.expand '~/.config/nvim/dictionary/ukrain-words.txt',
+            },
+          },
         },
       },
     },
