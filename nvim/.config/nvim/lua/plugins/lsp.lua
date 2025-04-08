@@ -168,6 +168,7 @@ return {
       -- gopls = {},
       pyright = {
         root_dir = vim.fn.getcwd(),
+        disableTaggedHints = true,
         settings = {
           python = {
             analysis = {

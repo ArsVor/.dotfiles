@@ -42,28 +42,7 @@ return {
       null_ls.builtins.formatting.djlint.with {
         extra_args = { '--indent', '2' },
       },
-      -- require('none-ls.formatting.ruff').with {
-      --   extra_args = {
-      --     '--target-version',
-      --     'py313',
-      --     '--line-length',
-      --     '88',
-      --     '--indent-width',
-      --     '4',
-      --     '--select',
-      --     'I,W292,E501',
-      --     '--per-file-ignores',
-      --     '__init__.py:E402,**/{tests,docs,tools}/*:E402',
-      --     '--line-ending',
-      --     'lf',
-      --     '--quote-style',
-      --     'single',
-      --     '--indent-style',
-      --     'space',
-      --     '--skip-magic-trailing-comma',
-      --     'false',
-      --   },
-      -- },
+
       require 'none-ls.formatting.ruff',
       require 'none-ls.formatting.ruff_format',
     }

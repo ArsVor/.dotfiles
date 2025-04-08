@@ -129,3 +129,5 @@ vim.api.nvim_set_keymap(
   '<cmd>lua require("plugins.custom.autoimport").show_auto_imports()<CR>',
   { noremap = true, silent = true, desc = '[Q]uickFix autoimport' }
 )
+
+vim.keymap.set('n', '<leader>cx', '<cmd> PyrightIgnore <CR>', { noremap = true, silent = true, desc = 'Add Pyright ignore diagnostics' })
