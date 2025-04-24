@@ -100,8 +100,13 @@ alias confb='$EDITOR ~/.bashrc' ## Open the '.bashrc' in your standart text edit
 alias confs='$EDITOR ~/.shrc' ## Open the X in your standart text editor.
 alias confk='$EDITOR ~/.config/kitty/kitty.conf' ## Open the 'kitty.conf' in your standart text editor.
 alias confz='$EDITOR ~/.zshrc' ## Open the '.zshrc' in your standart text editor.
+alias confq='$EDITOR ~/.config/qtile/config.py' ## Open the '.zshrc' in your standart text editor.
 alias rlsh='source $CONFIG_SH_PATH' ## Reload shell 
 alias scr="~/.scr/add_script_file.sh " ## Creates a new executable file with the specified shebang based on the provided FLAG, and then opens it in the default editor (set by $EDITOR, defaults to 'nano' if not set). If the file already exists, it prompts you to open it. The script also verifies if the target directory exists before file creation. If the target directory does not exists, it prompts you to create it (with parents directoryes if they does not exist). 
+alias wttr0="c && curl wttr.in/48.42403,35.02490\?Q0\&lang=uk" ## Show the weather for now
+alias wttr1="c && curl wttr.in/48.42403,35.02490\?Q1\&lang=uk" ## Show the weather for day
+alias wttr2="c && curl wttr.in/48.42403,35.02490\?Q2\&lang=uk" ## Show the weather for 2 days
+alias wttr3="c && curl wttr.in/48.42403,35.02490\?Q\&lang=uk" ## Show the weather for 3 days
 # setcp="~/.scr/set_current_project_path.sh " ## Set the worcking directory as the $CURRENT_PROJECT (You can jump to the $CURRENT_PROJECT directory with the "cdp" command). Func in config file.
 # mmry="echo $(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {print int((total - available) / total * 100) "%"}'" ## Show used memory percent. Func in config file.
 # swap="echo $(awk '/SwapTotal/ {total=$2} /SwapFree/ {available=$2} END {print int((total - available) / total * 100) "%"}' /proc/meminfo)	" ## Show used swap file percent. Func in config file.
@@ -116,6 +121,7 @@ alias py="python" ## Run python current version
 alias echoenv='echo $VIRTUAL_ENV' ## Print active virtualenv version path
 #alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
 alias vrun="source ./venv/bin/activate" ## Activate python venv based in current directory
+alias ../v="source ../venv/bin/activate" ## Activate python venv based in current directory
 alias voff="deactivate" ## Deactivate python venv
 
 # django

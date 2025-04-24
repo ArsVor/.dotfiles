@@ -179,6 +179,15 @@ return {
             },
           },
         },
+        capabilities = {
+          textDocument = {
+            publishDiagnostics = {
+              tagSupport = {
+                valueSet = { 2 },
+              },
+            },
+          },
+        },
       },
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -189,26 +198,6 @@ return {
       -- But for many setups, the LSP (`tsserver`) will work just fine
       ts_ls = {}, -- tsserver is deprecated
       ruff = {},
-      -- pylsp = {
-      --   settings = {
-      --     pylsp = {
-      --       plugins = {
-      --         pyflakes = { enabled = false },
-      --         pycodestyle = {
-      --           enabled = true,
-      --           ignore = { 'W391', 'E501' },
-      --           maxLineLength = 100,
-      --         },
-      --         autopep8 = { enabled = false },
-      --         yapf = { enabled = false },
-      --         mccabe = { enabled = false },
-      --         pylsp_mypy = { enabled = false },
-      --         pylsp_black = { enabled = false },
-      --         pylsp_isort = { enabled = false },
-      --       },
-      --     },
-      --   },
-      -- },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
       tailwindcss = {},
@@ -282,6 +271,8 @@ return {
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for tsserver)
+          --
+          capabilities.offsetEncoding = { 'utf-8' }
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
 
           if server_name == 'emmet_ls' then

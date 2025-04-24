@@ -422,6 +422,9 @@ screens = [
                     format="%a %d %b %H:%M",
                     mouse_callbacks={
                         "Button1": lazy.spawn(calendar),
+                        "Button3": lazy.spawn(
+                            "zsh -c ~/.config/qtile/src/weather_mouse_callbeck.sh"
+                        ),
                     },
                 ),
                 widget.Spacer(length=bar.STRETCH),

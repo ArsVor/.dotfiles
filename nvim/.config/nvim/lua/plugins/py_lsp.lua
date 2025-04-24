@@ -20,7 +20,6 @@ return {
       return cwd
     end
 
-    -- Шукаємо venv у поточній директорії або на рівень вище
     local venv_path = find_venv()
 
     -- Якщо знайдено, передаємо його у py_lsp
