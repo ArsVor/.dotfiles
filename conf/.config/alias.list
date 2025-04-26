@@ -93,6 +93,11 @@ alias gw="glow " ## View .md file (In terminal instansely).
 alias gwp="glow -p " ## View .md file with pager (In view window).
 alias mybnd="glow -p ~/.config/shortcats.md" ## View keyboard shortcats.
 
+# taskwarior
+alias tt="taskwarrior-tui" ## run taskwarrior-tui
+alias nt="task add $1" ## add new task
+alias tm="task $1 modify $2" ## add new task
+
 # other
 #alias conff='$EDITOR ~/.config/fish/config.fish' ## Open the 'config.fish' in your standart text editor.
 alias confa='$EDITOR ~/.config/alias.list' ## Open the 'alias.list' in your standart text editor.

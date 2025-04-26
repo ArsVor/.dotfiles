@@ -261,16 +261,33 @@ function tux () {
             else
                 cd $CURRENT_PROJECT
                 SESSION_NAME=$(echo $CURRENT_PROJECT | awk -F "/" '{print $NF}' | sed s/\\./_/)
-                ~/.scr/tmux/project.sh "$SESSION_NAME"
+                SCRIPT=~/.scr/tmux/project.sh
             fi;;
         -p) 
-            ~/.scr/tmux/project.sh "$SESSION_NAME""_project";;
+            SCRIPT=~/.scr/tmux/project.sh
+            SESSION_NAME="$SESSION_NAME""_project";;
         -s)
-            ~/.scr/tmux/simple.sh "$SESSION_NAME""_simple";;
+            SCRIPT=~/.scr/tmux/simple.sh
+            SESSION_NAME="$SESSION_NAME""_simple";;
+        -t)
+            SCRIPT=~/.scr/tmux/tasks.sh
+            SESSION_NAME="TASKS";;
         *) 
             echo "Error: Unknown option '$FLAG'"
             return 1;;
     esac
+
+    tmux has-session -t $SESSION_NAME 2>/dev/null && IS_EXIST=true || IS_EXIST=false
+
+    if $IS_EXIST; then
+        if [[ $(echo $TMUX) ]]; then
+		tmux switch-client -t $SESSION_NAME
+	else
+		tmux -2 attach -t $SESSION_NAME
+	fi
+    else
+        $SCRIPT "--attach" $SESSION_NAME
+    fi
 
 }
 

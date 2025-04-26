@@ -14,13 +14,13 @@ color.debug=blue
 
 # Task state
 color.completed=white
-color.deleted=bright yellow on gray0
+color.deleted=bright yellow on gray3
 color.active=black on green
 color.recurring=underline
 color.scheduled=black on cyan
 color.until=
-color.blocked=black on white
-color.blocking=black on bright white
+color.blocked=on gray8
+color.blocking=underline on gray4
 
 # Project
 color.project.none=

@@ -29,3 +29,22 @@ data.location=~/Documents/ObsidianVault/.task
 include ./ars_everforest_16.theme
 
 uda.priority.values=H,M,,L
+
+alias.mod=modify
+alias.ln=next
+alias.ll=list
+alias.la=long
+alias.ant=annotate
+alias.dnt=denotate
+alias.bd=burndown.daily
+alias.bw=burndown.weekly
+alias.bm=burndown.monthly
+alias.gd=ghistory.daily
+alias.gw=ghistory.weekly
+alias.gm=ghistory.monthly
+alias.ga=ghistory.annual
+alias.hd=history.daily
+alias.hw=history.weekly
+alias.hm=history.monthly
+alias.ha=history.annual
+alias.als=_aliases

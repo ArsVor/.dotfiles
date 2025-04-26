@@ -1,6 +1,9 @@
 #!/bin/zsh
 
-SESSION="$1"
+ATTACH=false
+[[ "$1" == "--attach" ]] && ATTACH=true
+
+SESSION="$2"
 GIT_DIR=$(fd -H -d=2 "\\.git\$"  | sed -r 's/\/.git\///')
 WD=$(pwd)
 PD=$(dirname $WD)
@@ -38,8 +41,10 @@ if [[ $GIT_DIR ]]; then
 	tmux send-keys -t $SESSION:3.1 "lg" C-m
 fi
 
-if [[ $(echo $TMUX) ]]; then
-	tmux switch-client -t $SESSION:1
-else
-	tmux -2 attach -t $SESSION:1
+if $ATTACH; then
+	if [[ $(echo $TMUX) ]]; then
+		tmux switch-client -t $SESSION:1
+	else
+		tmux -2 attach -t $SESSION:1
+	fi
 fi
