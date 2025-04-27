@@ -447,7 +447,7 @@ screens = [
                 widget.CheckUpdates(
                     colour_have_updates="#e67e80",
                     # custom_command="pikaur -Qu ",
-                    custom_command="~/.config/qtile/update_check.sh ",
+                    custom_command="updatecheck",
                     display_format="   {updates}",
                     update_interval=7200,
                     mouse_callbacks={
