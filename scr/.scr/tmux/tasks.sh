@@ -12,7 +12,7 @@ tmux new-window -n request -t $SESSION
 tmux send-keys -t $SESSION:1.1 "tasksh" C-m
 tmux send-keys -t $SESSION:3.1 "cd ~/projects/requests" C-m
 tmux send-keys -t $SESSION:1.1 "! clear" C-m
-tmux send-keys -t $SESSION:1.1 "list" C-m
+tmux send-keys -t $SESSION:1.1 "next" C-m
 tmux send-keys -t $SESSION:3.1 "nvim" C-m
 tmux select-window -t $SESSION:1
 tmux select-pane -t $SESSION:1.1
