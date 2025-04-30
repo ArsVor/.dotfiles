@@ -23,14 +23,21 @@ fi
 
 tmux new-session -d -s $SESSION 
 tmux split-window -v -t $SESSION:1.1
+tmux new-window -n shell -t $SESSION
 if [[ $VENV != "nill" ]]; then
 	tmux send-keys -t $SESSION:1.1 "source $VENV/bin/activate" C-m
 	tmux send-keys -t $SESSION:1.1 "v" C-m
 	tmux send-keys -t $SESSION:1.1 ":AutoSelectSystemVenv" C-m
 	tmux send-keys -t $SESSION:1.2 "source $VENV/bin/activate" C-m
+
+	if [[ -f ./manage.py ]]; then
+		tmux split-window -v -t $SESSION:2.1
+		tmux send-keys -t $SESSION:2.2 "source $VENV/bin/activate" C-m
+		tmux send-keys -t $SESSION:2.2 "python manage.py shell" C-m
+	fi
 fi
 tmux resize-pane -Z -t $SESSION:1.1
-tmux new-window -n zsh -t $SESSION
+tmux resize-pane -Z -t $SESSION:2.1
 if [[ $GIT_DIR ]]; then
 	tmux new-window -n Git -t $SESSION
 
