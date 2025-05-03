@@ -8,9 +8,9 @@ SESSION="TASKS"
 
 tmux new-session -d -s $SESSION -n tasksh
 tmux new-window -n zsh -t $SESSION
-tmux new-window -n request -t $SESSION
+tmux new-window -n problems -t $SESSION
 tmux send-keys -t $SESSION:1.1 "tasksh" C-m
-tmux send-keys -t $SESSION:3.1 "cd ~/projects/requests" C-m
+tmux send-keys -t $SESSION:3.1 "cd ~/Documents/ObsidianVault/problems" C-m
 tmux send-keys -t $SESSION:1.1 "! clear" C-m
 tmux send-keys -t $SESSION:1.1 "next" C-m
 tmux send-keys -t $SESSION:3.1 "nvim" C-m

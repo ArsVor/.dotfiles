@@ -1,0 +1,11 @@
+gpt ~/.scr/lounch_gpt.sh
+gset /usr/bin/gnome-control-center
+lock ~/.scr/lock
+locker ~/.scr/locker
+mail /usr/bin/thunderbird
+out ~/.scr/loggout.sh
+soft /usr/bin/gnome-software
+sysm /usr/bin/gnome-system-monitor
+text /usr/bin/gnome-text-editor
+tsl ~/.scr/google_translate.sh
+updatecheck ~/.local/.src/update_check.sh

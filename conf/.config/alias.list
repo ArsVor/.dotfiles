@@ -125,14 +125,27 @@ alias py="python" ## Run python current version
 #alias pyoff="pyenv deactivate" ## Deactivate virtualenv
 alias echoenv='echo $VIRTUAL_ENV' ## Print active virtualenv version path
 #alias vinit="python -m venv venv && pyenv deactivate && source ./venv/bin/activate.fish" ## Create python venv with current python version (pyenv if activated), deactivate pyenv (if active) and activate venv
-alias vrun="source ./venv/bin/activate" ## Activate python venv based in current directory
-alias ../v="source ../venv/bin/activate" ## Activate python venv based in current directory
+alias vrun="source ./.venv/bin/activate" ## Activate python venv based in current directory
+alias ../v="source ../.venv/bin/activate" ## Activate python venv based in current directory
 alias voff="deactivate" ## Deactivate python venv
 
+# uv
+alias up="uv python " ## Abbr for 'uv python'
+alias upy="uv run python" ## Run python from uv .venv
+alias uvr="uv run " ## Abbr for 'uv run'
+
 # django
-alias run='python manage.py runserver' ## Abbr for "python manage.py runserver" usable in venv with the installed gjango.
-alias pm='python manage.py ' ## Abbr for "python manage.py" usable in venv with the installed gjango.
-alias addapp='python manage.py startapp ' ## Abbr for "python manage.py startapp" usable in venv with the installed gjango.
-alias addsu='python manage.py createsuperuser ' ## Abbr for "python manage.py createsuperuser" usable in venv with the installed gjango.
-alias mkmigr='python manage.py makemigrations ' ## Abbr for "python manage.py makemigrations" usable in venv with the installed gjango.
-alias migr='python manage.py migrate ' ## Abbr for "python manage.py migrate" usable in venv with the installed gjango.
+alias run='uv run manage.py runserver' ## Abbr for "uv run manage.py runserver" usable in venv with the installed gjango.
+alias pm='uv run manage.py ' ## Abbr for "uv run manage.py" usable in venv with the installed gjango.
+alias addapp='uv run manage.py startapp ' ## Abbr for "uv run manage.py startapp" usable in venv with the installed gjango.
+alias addsu='uv run manage.py createsuperuser ' ## Abbr for "uv run manage.py createsuperuser" usable in venv with the installed gjango.
+alias mkmigr='uv run manage.py makemigrations ' ## Abbr for "uv run manage.py makemigrations" usable in venv with the installed gjango.
+alias migr='uv run manage.py migrate ' ## Abbr for "uv run manage.py migrate" usable in venv with the installed gjango.
+
+alias prun='python manage.py runserver' ## Abbr for "python manage.py runserver" usable in venv with the installed gjango.
+alias ppm='python manage.py ' ## Abbr for "python manage.py" usable in venv with the installed gjango.
+alias paddapp='python manage.py startapp ' ## Abbr for "python manage.py startapp" usable in venv with the installed gjango.
+alias paddsu='python manage.py createsuperuser ' ## Abbr for "python manage.py createsuperuser" usable in venv with the installed gjango.
+alias pmkmigr='python manage.py makemigrations ' ## Abbr for "python manage.py makemigrations" usable in venv with the installed gjango.
+alias pmigr='python manage.py migrate ' ## Abbr for "python manage.py migrate" usable in venv with the installed gjango.
+
