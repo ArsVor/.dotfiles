@@ -27,7 +27,8 @@ tmux new-window -n shell -t $SESSION
 if [[ $VENV != "nill" ]]; then
 	# tmux send-keys -t $SESSION:1.1 "source $VENV/bin/activate" C-m
 	tmux send-keys -t $SESSION:1.1 "v" C-m
-	tmux send-keys -t $SESSION:1.1 ":AutoSelectSystemVenv" C-m
+	tmux send-keys -t $SESSION:1.1 ":PyLspActivateVenv .venv" C-m
+	# tmux send-keys -t $SESSION:1.1 ":AutoSelectSystemVenv" C-m
 	# tmux send-keys -t $SESSION:1.2 "source $VENV/bin/activate" C-m
 
 	if [[ -f ./manage.py ]]; then
