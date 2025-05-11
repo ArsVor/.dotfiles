@@ -1,10 +1,24 @@
 [global]
-font = JatBrainsMono 24
-padding = 10
-horizontal_padding = 10
-transparency = 70
-layer = overlay
-width = (300, 1000)
-origin = top-center
-corner_radius = 30
+    font = JatBrainsMono 18
+    padding = 10
+    horizontal_padding = 10
+    transparency = 70
+    layer = overlay
+    width = (300, 1000)
+    origin = top-center
+    corner_radius = 30
+
+[urgency_low]
+    background = "#3a515d"
+    foreground = "#d3c6aa"
+    timeout = 10
+
+[urgency_normal]
+    background = "#3a515d"
+    foreground = "#d3c6aa"
+    timeout = 15
+
+[urgency_low]
+    background = "#543a48"
+    foreground = "#d3c6aa"
 
