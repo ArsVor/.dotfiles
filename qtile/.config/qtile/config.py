@@ -36,7 +36,7 @@ modkey = "mod1"
 terminal = "kitty"
 calculator = "gnome-calculator"
 calendar = "gnome-calendar"
-browser = ""
+# browser = ""
 browser = "zen-browser"
 gpt_chat = "gpt"
 google_translate = "tsl"
@@ -242,6 +242,7 @@ keys = [
             Key([], "f", lazy.spawn("nautilus"), desc="Launch Nautilus"),
             Key([], "g", lazy.spawn("google-chrome"), desc="Launch Google chrome"),
             Key([], "m", lazy.spawn("gnome-maps"), desc="Launch Maps"),
+            Key([], "q", lazy.spawn("qutebrowser"), desc="Launch Qutebrowser"),
             Key(
                 [],
                 "s",
