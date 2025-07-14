@@ -28,7 +28,7 @@ return {
       'rcarriga/nvim-dap-ui',
       keys = {
         {
-          '<leader>de',
+          '<leader>be',
           function()
             -- Calling this twice to open and jump into the window.
             require('dapui').eval()
@@ -80,7 +80,7 @@ return {
       'jbyuki/one-small-step-for-vimkind',
       keys = {
         {
-          '<leader>dl',
+          '<leader>bl',
           function()
             require('osv').launch { port = 8086 }
           end,
@@ -261,28 +261,28 @@ return {
       ['pwa-node'] = { 'typescript', 'javascript' },
     })
 
-    vim.keymap.set('n', '<Leader>b', dap.toggle_breakpoint, { desc = 'Toggle [B]reakpoint' })
+    vim.keymap.set('n', '<Leader>ba', dap.toggle_breakpoint, { desc = 'Toggle [B]reakpoint' })
     vim.keymap.set('n', '<Leader>bx', dap.clear_breakpoints, { desc = 'Clear [B]reakpoint' })
-    vim.keymap.set('n', '<Leader>db', dap.run_to_cursor, { desc = 'Run' })
-    vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'Continue' })
-    vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Step [I]nto' })
-    vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Step [O]ver' })
-    vim.keymap.set('n', '<leader>du', dap.step_out, { desc = 'Step o[U]t' })
-    -- vim.keymap.set('n', '<leader>db', dap.step_back, { desc = 'Step [B]ack' })
-    vim.keymap.set('n', '<leader>dr', dap.restart, { desc = '[R]estart' })
-    vim.keymap.set('n', '<Leader>dx', dap.terminate, { desc = 'Terminate' })
+    vim.keymap.set('n', '<Leader>bg', dap.run_to_cursor, { desc = '[G]o' })
+    vim.keymap.set('n', '<leader>bc', dap.continue, { desc = 'Continue' })
+    vim.keymap.set('n', '<leader>bi', dap.step_into, { desc = 'Step [I]nto' })
+    vim.keymap.set('n', '<leader>bo', dap.step_over, { desc = 'Step [O]ver' })
+    vim.keymap.set('n', '<leader>bu', dap.step_out, { desc = 'Step o[U]t' })
+    vim.keymap.set('n', '<leader>bb', dap.step_back, { desc = 'Step [B]ack' })
+    vim.keymap.set('n', '<leader>br', dap.restart, { desc = '[R]estart' })
+    vim.keymap.set('n', '<Leader>bx', dap.terminate, { desc = 'Terminate' })
     vim.keymap.set('n', '<Leader>lp', function()
       require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
     end, { desc = 'Set breakpoint' })
-    vim.keymap.set('n', '<Leader>dr', dap.repl.open, { desc = 'Open dap-[R]epl buff' })
-    -- vim.keymap.set('n', '<Leader>dl', dap.run_last, { desc = 'Toggle [B]reakpoint' })
-    vim.keymap.set({ 'n', 'v' }, '<Leader>dh', dap_ui_widgets.hover, { desc = 'Widget [H]over' })
-    vim.keymap.set({ 'n', 'v' }, '<Leader>dp', dap_ui_widgets.preview, { desc = 'Widget [P]review' })
-    vim.keymap.set('n', '<Leader>df', function()
+    vim.keymap.set('n', '<Leader>br', dap.repl.open, { desc = 'Open dap-[R]epl buff' })
+    -- vim.keymap.set('n', '<Leader>bl', dap.run_last, { desc = 'Toggle [B]reakpoint' })
+    vim.keymap.set({ 'n', 'v' }, '<Leader>bh', dap_ui_widgets.hover, { desc = 'Widget [H]over' })
+    vim.keymap.set({ 'n', 'v' }, '<Leader>bp', dap_ui_widgets.preview, { desc = 'Widget [P]review' })
+    vim.keymap.set('n', '<Leader>bf', function()
       local widgets = require 'dap.ui.widgets'
       widgets.centered_float(widgets.frames)
     end, { desc = 'Open [F]rames float widget' })
-    vim.keymap.set('n', '<Leader>ds', function()
+    vim.keymap.set('n', '<Leader>bs', function()
       local widgets = require 'dap.ui.widgets'
       widgets.centered_float(widgets.scopes)
     end, { desc = 'Open [S]copes float widget' })

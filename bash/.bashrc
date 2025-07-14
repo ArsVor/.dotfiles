@@ -151,3 +151,4 @@ bind -x '"\ea": als'
 # bind '"\C-t":"fzf-file-widget-default\n"'
 # bind '"\C-f":"fzf-file-widget-ctrl-f\n"'
 # bind '"\C-d":"fzf-dir-widget\n"'
+. "$HOME/.cargo/env"

@@ -114,10 +114,10 @@ vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = false, desc = '[P]as
 vim.keymap.set('n', '<leader>aa', '<cmd> %y <CR>', { noremap = true, silent = false, desc = 'Yank all' })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Open [F]loating [D]iagnostic message' })
-vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostics [L]ist' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { noremap = true, silent = false, desc = 'Open [F]loating [D]iagnostic message' })
+vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { noremap = true, silent = false, desc = 'Open [D]iagnostics [L]ist' })
 
 -- Rest server run request under the cusror
 vim.keymap.set('n', '<leader>rr', ':Rest run<CR>', { noremap = true, silent = false, desc = '[R]est [R]un under the cusror' })

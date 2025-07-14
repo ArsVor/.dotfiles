@@ -4,3 +4,4 @@
 if [ -f ~/.shrc ]; then
     . ~/.shrc
 fi
+. "$HOME/.cargo/env"

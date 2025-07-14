@@ -15,6 +15,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+vim.diagnostic.config {
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true, -- <-- головне
+}
+
 -- vim.lsp.set_log_level 'debug'
 
 require('lazy').setup {
@@ -48,6 +56,7 @@ require('lazy').setup {
   require 'plugins.py_lsp',
   require 'plugins.render-markdown',
   require 'plugins.rest',
+  require 'plugins.rust-tools',
   require 'plugins.spectre',
   require 'plugins.substitute',
   require 'plugins.telescope',

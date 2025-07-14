@@ -13,7 +13,7 @@ eval "$(zoxide init zsh)"
 
 # User specific environment
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
-    export PATH="$HOME/.local/bin:$PATH"
+    export PATH="$HOME/.local/bin:$HOME/.cargo/env:$PATH"
 fi
 export PATH
 
