@@ -409,8 +409,9 @@ screens = [
                     linewidth=0,
                     padding=6,
                 ),
-                widget.CurrentLayoutIcon(),
-                # widget.CurrentLayout(),
+                widget.CurrentLayout(
+                    mode="icon",
+                ),
                 widget.GroupBox(
                     active="#d3c6aa",
                     highlight_color=["#00000090", "#7fbbb3"],
