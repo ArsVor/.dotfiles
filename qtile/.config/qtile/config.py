@@ -24,6 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from asyncio import sleep
 import os
 import subprocess
 
@@ -86,6 +87,26 @@ def alter_column_switch_focus(qtile, direction):
     else:
         return
     qtile.current_layout.next()
+
+
+tracking_space = False
+
+
+def set_space(qtile):
+    global tracking_space
+
+    tracking_space = True
+
+
+@hook.subscribe.leave_chord
+async def caps_word():
+    global tracking_space
+
+    qtile.cmd_spawn("xdotool key Caps_Lock")
+    if tracking_space:
+        await sleep(0.1)
+        qtile.cmd_spawn("xdotool key space")
+        tracking_space = False
 
 
 groups = [Group(i) for i in "123456789"]
@@ -302,6 +323,12 @@ keys = [
         ],
         name="Y",
     ),
+    KeyChord(
+        [mod],
+        "Caps_Lock",
+        [Key([], "space", lazy.function(set_space), desc="Cape Word")],
+        name="C-W",
+    ),
     #### Multimedia keys ####
     # Volume
     Key([], "XF86AudioMute", lazy.spawn("pamixer -t")),
@@ -438,6 +465,7 @@ screens = [
                         "R": ("#00000090", "#3a515d"),
                         "W": ("#00000090", "#e69875"),
                         "Y": ("#00000090", "#a7c080"),
+                        "C-W": ("#00000090", "#dbbc73"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
