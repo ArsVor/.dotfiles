@@ -6,6 +6,7 @@ alias e="exit" ## Exit.
 alias c="clear" ## Clear terminal.
 alias cp="cp -i " ## Copy interactive (Prompt before overwrite).
 alias cpf="/usr/bin/cp -f " ## Copy force (Do not prompt before overwriting).
+alias cr="cargo run " ## cargo run.
 alias ff="fastfetch" ## Print system information (fastfetch). 
 alias j="z " ## Zoxide. 
 alias md="mkdir -p " ## Create directory, if they do not already exist. Make parent directories as needed. 
