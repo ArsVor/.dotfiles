@@ -22,7 +22,7 @@ else
 fi
 
 tmux new-session -d -s $SESSION 
-tmux split-window -v -t $SESSION:1.1
+tmux split-window -h -t $SESSION:1.1
 tmux new-window -n shell -t $SESSION
 if [[ $VENV != "nill" ]]; then
 	# tmux send-keys -t $SESSION:1.1 "source $VENV/bin/activate" C-m
