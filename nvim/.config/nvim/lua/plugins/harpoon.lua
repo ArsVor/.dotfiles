@@ -40,10 +40,63 @@ return {
 
     -- Toggle previous & next buffers stored within Harpoon list
     vim.keymap.set('n', '<leader>.', function()
-      harpoon:list():prev()
+      local list = harpoon:list()
+      local total = #list.items
+      if total == 0 then
+        return
+      end
+
+      local current_file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
+      local idx = nil
+
+      -- знайти індекс поточного файла у harpoon
+      for i, item in ipairs(list.items) do
+        if vim.fn.fnamemodify(item.value, ':p') == current_file then
+          idx = i
+          break
+        end
+      end
+
+      if not idx then
+        list:select(total)
+        return
+      end
+
+      local prev_idx = idx - 1
+      if prev_idx < 1 then
+        prev_idx = total
+      end
+
+      list:select(prev_idx)
     end, { desc = 'Go to prev. harpoon buffer' })
     vim.keymap.set('n', '<leader>;', function()
-      harpoon:list():next()
+      local list = harpoon:list()
+      local total = #list.items
+      if total == 0 then
+        return
+      end
+
+      local current_file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
+      local idx = nil
+
+      for i, item in ipairs(list.items) do
+        if vim.fn.fnamemodify(item.value, ':p') == current_file then
+          idx = i
+          break
+        end
+      end
+
+      if not idx then
+        list:select(1)
+        return
+      end
+
+      local next_idx = idx + 1
+      if next_idx > total then
+        next_idx = 1
+      end
+
+      list:select(next_idx)
     end, { desc = 'Go to next harpoon buffer' })
   end,
 }
