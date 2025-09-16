@@ -20,10 +20,11 @@ alias te='$EDITOR ' ## Open file in standart text editor (Create file, if they d
 alias ste='sudo $EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist) with superuser permissions.
 alias pau="pikaur " ## dnf with superuser permissions
 alias pac="pacman " ## dnf install with superuser permissions
-alias spac="sudo pacman " ## dnf install with superuser permissions
 alias rg="rg -. " ## ripgrep do not ignore hidden objects
+alias spac="sudo pacman " ## dnf install with superuser permissions
 # als="cat ~/.config/alias.list | ... | fzf ..." ## Show the alias list with fzf. Selected alias is input to command line. Worck with shortcat - Ctrl+A. (In bash only shortcat - Alt+A. Alias don't worck). Func in config file.
 alias stow="stow -d ~/.dotfiles "
+alias tl="tmux list-sessions" ## abbr to `tmux list-sessions` 
 
 # git
 alias lg="lazygit " ## Open Lazygit. Terminal GUI git maanger
