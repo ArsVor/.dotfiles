@@ -37,7 +37,6 @@ modkey = "mod1"
 terminal = "kitty"
 calculator = "gnome-calculator"
 calendar = "gnome-calendar"
-# browser = ""
 browser = "zen-browser"
 gpt_chat = "gpt"
 google_translate = "tsl"
@@ -92,18 +91,20 @@ def alter_column_switch_focus(qtile, direction):
 tracking_space = False
 
 
-def set_space(qtile):
-    global tracking_space
+@hook.subscribe.enter_chord
+def enter_chord(chord_name):
+    if chord_name == "C-W":
+        global tracking_space
 
-    tracking_space = True
+        tracking_space = True
 
 
 @hook.subscribe.leave_chord
 async def caps_word():
     global tracking_space
 
-    qtile.cmd_spawn("xdotool key Caps_Lock")
     if tracking_space:
+        qtile.cmd_spawn("xdotool key Caps_Lock")
         await sleep(0.1)
         qtile.cmd_spawn("xdotool key space")
         tracking_space = False
@@ -326,7 +327,9 @@ keys = [
     KeyChord(
         [mod],
         "Caps_Lock",
-        [Key([], "space", lazy.function(set_space), desc="Cape Word")],
+        [
+            Key([], "space", lazy.function(lambda _: None), desc="Cape Word"),
+        ],
         name="C-W",
     ),
     #### Multimedia keys ####
