@@ -21,6 +21,7 @@ ZSHCONFDIR="$HOME/.config/zsh"
 
 export CONFIG_SH_PATH="$HOME/.zshrc"
 export EDITOR="/usr/bin/nvim"
+export MANPAGER="nvim +Man!"
 
 #### fzf default exports ####
 export FZF_DEFAULT_COMMAND="fd --color=never --hidden --exclude .git --search-path /"
