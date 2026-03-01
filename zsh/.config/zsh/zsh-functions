@@ -250,13 +250,22 @@ function getcp () {
 function tux () {
     FLAG="$1"
     SESSION_NAME="$2"
+    WD="$3"
 
     if [[ -z $FLAG ]]; then
         echo "Error: [OPTION] missed"
         return 1
+    fi 
+
+    if [[ -z $WD ]]; then
+        WD=$(pwd)
+    else
+        if ! [[ -d $WD ]]; then
+            echo "Error: path '$WD' does not exist"
+            return 1
+        fi
     fi
         
-
     if [[ -z $SESSION_NAME ]] && SESSION_NAME=$(pwd | awk -F "/" '{print $NF}' | sed s/\\./_/)
 
     case $FLAG in
@@ -268,16 +277,14 @@ function tux () {
                 echo "Error: Current project is set to `$CURRENT_PROJECT`, but path does not exist"
                 return 1
             else
-                cd $CURRENT_PROJECT
+                WD=$CURRENT_PROJECT
                 SESSION_NAME=$(echo $CURRENT_PROJECT | awk -F "/" '{print $NF}' | sed s/\\./_/)
                 SCRIPT=~/.scr/tmux/project.sh
             fi;;
         -p) 
-            SCRIPT=~/.scr/tmux/project.sh
-            SESSION_NAME="$SESSION_NAME""_project";;
+            SCRIPT=~/.scr/tmux/project.sh;;
         -s)
-            SCRIPT=~/.scr/tmux/simple.sh
-            SESSION_NAME="$SESSION_NAME""_simple";;
+            SCRIPT=~/.scr/tmux/simple.sh;;
         -t)
             SCRIPT=~/.scr/tmux/tasks.sh
             SESSION_NAME="TASKS";;
@@ -295,7 +302,7 @@ function tux () {
 		tmux -2 attach -t $SESSION_NAME
 	fi
     else
-        $SCRIPT "--attach" $SESSION_NAME
+        $SCRIPT "--attach" $SESSION_NAME $WD
     fi
 
 }

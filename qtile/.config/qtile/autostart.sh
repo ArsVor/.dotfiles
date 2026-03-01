@@ -8,4 +8,5 @@ xset dpms 0 0 0
 dunst &
 locker &
 ~/.config/qtile/src/load_worckflow.sh
+# emacs --daemon &
 systemctl --user restart libinput-gestures.service

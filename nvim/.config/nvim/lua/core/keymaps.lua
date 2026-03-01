@@ -5,6 +5,15 @@ vim.g.maplocalleader = ' '
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+-- Main keybindings for uk layout
+vim.keymap.set('n', 'щ', 'o', { silent = true })
+vim.keymap.set('n', 'к', 'r', { silent = true })
+vim.keymap.set('n', 'ш', 'i', { silent = true })
+vim.keymap.set('n', 'ф', 'a', { silent = true })
+vim.keymap.set('n', 'S-ш', 'S-i', { silent = true })
+vim.keymap.set('n', 'S-ф', 'S-a', { silent = true })
+vim.keymap.set('n', 'S-щ', 'S-o', { silent = true })
+
 -- Remap Create fold 'zf'
 vim.keymap.set('n', 'z+', 'zf', { remap = true, desc = 'Create fold' })
 
@@ -19,6 +28,7 @@ vim.keymap.set('i', '<C-l>', '<Right>', { silent = true })
 
 -- Close Insert Mode
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = false, desc = 'Close Insert Mode' })
+vim.keymap.set('i', 'оо', '<Esc>', { noremap = true, silent = false, desc = 'Close Insert Mode' })
 
 -- Close Insert Mode and Save
 vim.keymap.set('i', 'jk', '<Esc>:write<CR>', { noremap = true, silent = false, desc = 'Close Insert Mode and Save' })

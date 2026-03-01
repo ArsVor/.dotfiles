@@ -4,8 +4,9 @@ ATTACH=false
 [[ "$1" == "--attach" ]] && ATTACH=true
 
 SESSION="$2"
+WD="$3"
 
-tmux new-session -d -s $SESSION
+tmux new-session -d -s $SESSION -c $WD
 
 if $ATTACH; then
 	if [[ $(echo $TMUX) ]]; then

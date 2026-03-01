@@ -2,6 +2,9 @@
 
 
 stty stop undef		# Disable ctrl-s to freeze terminal.
+stty start undef	# Disable ctrl-q to freeze terminal.
+stty -ixon -ixoff	# Disable XON/XOFF.
+
 setopt interactive_comments
 setopt ignore_eof # Do not exit then pressed ctrl+d 
 
@@ -60,13 +63,15 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 #### History ####
+mkdir -p ~/.cache/zsh
 HISTFILE=~/.cache/zsh/zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 
 setopt HIST_IGNORE_SPACE  # Don't save when prefixed with space
-setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
-setopt SHARE_HISTORY      # Share history between sessions
+setopt INC_APPEND_HISTORY # Add to history insted
+setopt HIST_IGNORE_ALL_DUPS # Don't save duplicate lines
+# setopt SHARE_HISTORY      # Share history between sessions
 
 # zsh-history-substring-search configuration
 bindkey '^[[A' history-substring-search-up
@@ -116,7 +121,7 @@ bindkey '^f' fzf-file-widget-ctrl-f
 bindkey '^d' fzf-dir-widget
 bindkey '\ea' als
 
-#### Tmux session auto start ####
+### Tmux session auto start ####
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux has-session -t default 2>/dev/null || tmux new-session -d -s default
 
@@ -126,7 +131,14 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 fi
 
 
+# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+#     tmux attach || tmux new
+# fi
+
+
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+bindkey '^q' .push-line
 

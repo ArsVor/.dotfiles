@@ -41,6 +41,7 @@ browser = "zen-browser"
 gpt_chat = "gpt"
 google_translate = "tsl"
 mail = "thunderbird"
+btop = "sysm"
 
 
 @hook.subscribe.startup_once
@@ -394,8 +395,8 @@ for i in groups:
 leyout_theme = {
     "border_width": 3,
     "margin": 15,
-    "border_focus": "ffffff",
-    "border_normal": "CCCCCC",
+    "border_focus": "#3a515d",
+    "border_normal": "#232a2e",
 }
 
 layouts = [
@@ -406,6 +407,10 @@ layouts = [
         border_focus_stack=["#83c092", "#a7c080"],
         border_width=3,
         margin=15,
+    ),
+    layout.Floating(
+        border_focus="#a7c080",
+        border_normal="#a7c080",
     ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -479,7 +484,6 @@ screens = [
                 ),
                 widget.CheckUpdates(
                     colour_have_updates="#e67e80",
-                    # custom_command="pikaur -Qu ",
                     custom_command="updatecheck",
                     display_format="   {updates}",
                     update_interval=7200,
@@ -494,11 +498,13 @@ screens = [
                     # background="#56635f90",
                     foreground="#7fbbb3",
                     format="   {load_percent}%",
+                    mouse_callbacks={"Button3": lazy.spawn(btop)},
                 ),
                 # widget.Sep(),
                 widget.Memory(
                     foreground="#e69875",
                     format="   {MemPercent}%",
+                    mouse_callbacks={"Button3": lazy.spawn(btop)},
                 ),
                 # widget.Sep(),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
@@ -623,6 +629,9 @@ bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
+    border_focus="#e69875",
+    border_normal="#425047",
+    border_width=3,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
@@ -636,7 +645,8 @@ floating_layout = layout.Floating(
         Match(wm_class="nl.hjdskes.gcolor3"),
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+        Match(title="btop-float"),  # btop
+    ],
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"

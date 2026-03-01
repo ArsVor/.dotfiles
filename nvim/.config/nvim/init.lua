@@ -50,7 +50,7 @@ require('lazy').setup {
   require 'plugins.mini',
   require 'plugins.misc',
   -- require 'plugins.neotree',
-  require 'plugins.noice',
+  -- require 'plugins.noice',
   require 'plugins.none-ls',
   require 'plugins.oil',
   require 'plugins.py_lsp',

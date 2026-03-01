@@ -5,7 +5,7 @@ ATTACH=false
 
 SESSION="$2"
 GIT_DIR=$(fd -H -d=2 "\\.git\$"  | sed -r 's/\/.git\///')
-WD=$(pwd)
+WD="$3"
 PD=$(dirname $WD)
 
 
@@ -21,7 +21,7 @@ else
 	VENV="nill"
 fi
 
-tmux new-session -d -s $SESSION 
+tmux new-session -d -s $SESSION -c $WD
 tmux split-window -h -t $SESSION:1.1
 tmux new-window -n shell -t $SESSION
 if [[ $VENV != "nill" ]]; then

@@ -18,13 +18,14 @@ alias rmdf="rm -dfr " ## Remove directory and all children objects.
 alias v="nvim " ## neovim
 alias te='$EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist). 
 alias ste='sudo $EDITOR ' ## Open file in standart text editor (Create file, if they do not already exist) with superuser permissions.
-alias pau="pikaur " ## dnf with superuser permissions
-alias pac="pacman " ## dnf install with superuser permissions
+alias pau="pikaur " ## alias for 'pikaur' AUR helper
+alias pac="pacman " ## Alias for pacman
 alias rg="rg -. " ## ripgrep do not ignore hidden objects
-alias spac="sudo pacman " ## dnf install with superuser permissions
+alias spac="sudo pacman " ## alias for pacman with superuser permissions
 # als="cat ~/.config/alias.list | ... | fzf ..." ## Show the alias list with fzf. Selected alias is input to command line. Worck with shortcat - Ctrl+A. (In bash only shortcat - Alt+A. Alias don't worck). Func in config file.
 alias stow="stow -d ~/.dotfiles "
 alias tl="tmux list-sessions" ## abbr to `tmux list-sessions` 
+alias vs="nvim ./src" ## abbr to `nvim ./src` 
 
 # git
 alias lg="lazygit " ## Open Lazygit. Terminal GUI git maanger
