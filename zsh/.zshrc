@@ -81,10 +81,16 @@ bindkey -M vicmd 'j' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 #### Sesh keybind ####
-zle     -N             sesh-sessions
-bindkey -M emacs '\es' sesh-sessions
-bindkey -M vicmd '\es' sesh-sessions
-bindkey -M viins '\es' sesh-sessions
+# zle     -N             sesh-sessions
+# bindkey -M emacs '\es' sesh-sessions
+# bindkey -M vicmd '\es' sesh-sessions
+# bindkey -M viins '\es' sesh-sessions
+
+zle     -N             tsm-fzf
+bindkey -M emacs '\es' tsm-fzf
+bindkey -M vicmd '\es' tsm-fzf
+bindkey -M viins '\es' tsm-fzf
+
 
 
 #### vi mode ####
@@ -123,9 +129,11 @@ bindkey '\ea' als
 
 ### Tmux session auto start ####
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux has-session -t default 2>/dev/null || tmux new-session -d -s default
+  tmux has-session -t default 2>/dev/null || tmux new-session -d -c ~/ -s default
 
   tmux has-session -t TASKS 2>/dev/null || ~/.scr/tmux/tasks.sh
+
+  tsm -Uun
 
   tmux attach-session -t default
 fi

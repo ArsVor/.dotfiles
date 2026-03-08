@@ -6,6 +6,11 @@ ATTACH=false
 
 SESSION="TASKS"
 
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+    tmux switch-client -t "$SESSION"
+    exit
+fi
+
 tmux new-session -d -s $SESSION -n tasksh
 tmux new-window -n zsh -t $SESSION
 tmux new-window -n problems -t $SESSION
@@ -21,6 +26,6 @@ if $ATTACH; then
 	if [[ $(echo $TMUX) ]]; then
 		tmux switch-client -t $SESSION:1
 	else
-		tmux -2 attach -t $SESSION:1
+		tmux attach-session -t $SESSION:1
 	fi
 fi

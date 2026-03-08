@@ -304,7 +304,57 @@ function tux () {
     else
         $SCRIPT "--attach" $SESSION_NAME $WD
     fi
+}
 
+function tsm-fzf() {
+    local result dir name cmd_line
+
+    # Отримуємо список та вибір через fzf
+    result=$(
+        {
+            tsm -Q
+            fd -Ha --no-require-git -E .cargo -E .git -E .venv -t d -t l . ~/ | sed "s|^$HOME|~|"
+        } | fzf --height=50% --highlight-line --cycle
+    )
+
+    # Якщо обрано директорію (починається з ~)
+    if [[ $result == ~* ]]; then
+        # Повний шлях
+        dir="${result/#\~/$HOME}"
+        # Останній каталог — назва сесії
+        name="${dir%/}"
+        name="${name##*/}"
+        name="${name/#./_}"
+
+        if [[ -z "$TMUX" ]]; then
+            # Не в tmux: створити або підключитися
+            cmd_line="tmux new-session -A -c '$dir' -s '$name'"
+
+            [[ -z "$cmd_line" ]] && zle reset-prompt && return
+
+            LBUFFER="${cmd_line} "
+            
+        else
+            # Вже всередині tmux: switch або створити в фоні
+            tmux has-session -t "$name" 2>/dev/null || \
+                tmux new-session -d -c "$dir" -s "$name"
+            tmux switch-client -t "$name"
+        fi
+    else
+        if [[ -z "$TMUX" ]]; then
+            cmd_line="tsm -U "$result""
+
+            [[ -z "$cmd_line" ]] && zle reset-prompt && return
+
+            LBUFFER="${cmd_line} "
+            
+            zle reset-prompt
+        else
+            tsm -U "$result"
+        fi
+    fi
+    zle reset-prompt
+    return
 }
 
 # function pyrun  () {

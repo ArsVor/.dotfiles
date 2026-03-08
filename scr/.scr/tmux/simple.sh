@@ -6,12 +6,12 @@ ATTACH=false
 SESSION="$2"
 WD="$3"
 
-tmux new-session -d -s $SESSION -c $WD
+tmux has-session -t "$SESSION" 2>/dev/null || tmux new-session -d -s $SESSION -c $WD
 
 if $ATTACH; then
-	if [[ $(echo $TMUX) ]]; then
-		tmux switch-client -t $SESSION:1
-	else
+	if [ -z $TMUX ]; then
 		tmux -2 attach -t $SESSION:1
+	else
+		tmux switch-client -t $SESSION:1
 	fi
 fi
