@@ -498,13 +498,19 @@ screens = [
                     # background="#56635f90",
                     foreground="#7fbbb3",
                     format="   {load_percent}%",
-                    mouse_callbacks={"Button3": lazy.spawn(btop)},
+                    mouse_callbacks={
+                        "Button1": lazy.spawn("resourser -c"),
+                        "Button3": lazy.spawn(btop),
+                    },
                 ),
                 # widget.Sep(),
                 widget.Memory(
                     foreground="#e69875",
                     format="   {MemPercent}%",
-                    mouse_callbacks={"Button3": lazy.spawn(btop)},
+                    mouse_callbacks={
+                        "Button1": lazy.spawn("resourser -m"),
+                        "Button3": lazy.spawn(btop),
+                    },
                 ),
                 # widget.Sep(),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
@@ -646,6 +652,7 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         Match(title="btop-float"),  # btop
+        Match(title="resourser"),  # resourser
     ],
 )
 auto_fullscreen = True
