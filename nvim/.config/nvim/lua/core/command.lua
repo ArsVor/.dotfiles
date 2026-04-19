@@ -1,5 +1,6 @@
 local minimize = require 'plugins.custom.minimize'
 
+vim.api.nvim_create_user_command('LspInfo', ':checkhealth vim.lsp', {})
 vim.api.nvim_create_user_command('QQ', 'q!', {})
 vim.api.nvim_create_user_command('W', 'w', {})
 vim.api.nvim_create_user_command('Minimize', function()

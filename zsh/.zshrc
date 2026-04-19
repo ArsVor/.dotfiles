@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-
 stty stop undef		# Disable ctrl-s to freeze terminal.
 stty start undef	# Disable ctrl-q to freeze terminal.
 stty -ixon -ixoff	# Disable XON/XOFF.

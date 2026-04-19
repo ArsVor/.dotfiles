@@ -14,7 +14,7 @@ return {
     -- Allows extra capabilities provided by nvim-cmp
     -- 'hrsh7th/cmp-nvim-lsp',
     'saghen/blink.cmp',
-    { 'folke/neodev.nvim', opts = {} },
+    -- { 'folke/neodev.nvim', opts = {} },
     { 'antosha417/nvim-lsp-file-operations', config = true },
   },
 
@@ -67,7 +67,7 @@ return {
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
-        map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        map('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
@@ -104,7 +104,7 @@ return {
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -131,7 +131,7 @@ return {
         -- code, if the language server you are using supports them
         --
         -- This may be unwanted, since they displace some of your code
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
@@ -163,12 +163,29 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 
+    local util = require 'lspconfig.util'
+
+    local function get_python_path()
+      local venv = vim.fn.getcwd() .. '/.venv/bin/python'
+      if vim.fn.executable(venv) == 1 then
+        return venv
+      end
+
+      return vim.fn.exepath 'python3'
+    end
+
     local servers = {
       -- clangd = {},
       -- gopls = {},
       pyright = {
-        root_dir = vim.fn.getcwd(),
-        disableTaggedHints = true,
+        root_dir = util.root_pattern('manage.py', 'pyproject.toml', '.git'),
+
+        before_init = function(_, config)
+          config.settings = config.settings or {}
+          config.settings.python = config.settings.python or {}
+          config.settings.python.pythonPath = get_python_path()
+        end,
+
         settings = {
           python = {
             analysis = {
@@ -179,16 +196,30 @@ return {
             },
           },
         },
-        capabilities = {
-          textDocument = {
-            publishDiagnostics = {
-              tagSupport = {
-                valueSet = { 2 },
-              },
-            },
-          },
-        },
       },
+      -- pyright = {
+      --   root_dir = vim.fn.getcwd(),
+      --   disableTaggedHints = true,
+      --   settings = {
+      --     python = {
+      --       analysis = {
+      --         autoSearchPaths = true,
+      --         useLibraryCodeForTypes = true,
+      --         diagnosticMode = 'openFilesOnly',
+      --         typeCheckingMode = 'basic',
+      --       },
+      --     },
+      --   },
+      --   capabilities = {
+      --     textDocument = {
+      --       publishDiagnostics = {
+      --         tagSupport = {
+      --           valueSet = { 2 },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
       -- rust_analyzer = {
       --   settings = {
       --     ['rust-analyzer'] = {
@@ -215,23 +246,22 @@ return {
       jsonls = {},
       yamlls = {},
       lua_ls = {
-        -- cmd = {...},
-        -- filetypes = { ...},
-        -- capabilities = {},
         settings = {
           Lua = {
             completion = {
               callSnippet = 'Replace',
             },
-            runtime = { version = 'LuaJIT' },
+            runtime = {
+              version = 'Lua 5.4',
+            },
             workspace = {
               checkThirdParty = false,
-              library = {
-                '${3rd}/luv/library',
-                unpack(vim.api.nvim_get_runtime_file('', true)),
-              },
+              library = vim.api.nvim_get_runtime_file('', true),
             },
-            diagnostics = { disable = { 'missing-fields' } },
+            -- diagnostics = {
+            --   disable = { 'missing-fields' },
+            --   globals = { 'vim' },
+            -- },
             format = {
               enable = false,
             },
@@ -267,7 +297,7 @@ return {
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
+      -- 'stylua', -- Used to format Lua code
       'emmet-language-server',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -26,21 +26,17 @@ vim.diagnostic.config {
 -- vim.lsp.set_log_level 'debug'
 
 require('lazy').setup {
-  -- *** --
-  -- Color Themes uncomment to apply, and restart nvim. (one only)
+  --   -- *** --
+  --   -- Color Themes uncomment to apply, and restart nvim. (one only)
   require 'plugins.themes.everforest',
-  -- require 'plugins.themes.catppuccin',
-  -- require 'plugins.themes.nord',
-  -- *** --
-  -- Modules
+  --   -- require 'plugins.themes.catppuccin',
+  --   -- require 'plugins.themes.nord',
+  --   -- *** --
+  --   -- Modules
   require 'plugins.alpha',
-  -- require 'plugins.autocompletion',
   require 'plugins.auto-save',
   require 'plugins.blink-cmp',
-  -- require 'plugins.bufferline',
   require 'plugins.comment',
-  require 'plugins.debug',
-  require 'plugins.floaterm',
   require 'plugins.gitsigns',
   require 'plugins.harpoon',
   require 'plugins.indent-blunkline',
@@ -49,13 +45,9 @@ require('lazy').setup {
   require 'plugins.lualine',
   require 'plugins.mini',
   require 'plugins.misc',
-  -- require 'plugins.neotree',
-  -- require 'plugins.noice',
   require 'plugins.none-ls',
   require 'plugins.oil',
-  require 'plugins.py_lsp',
   require 'plugins.render-markdown',
-  require 'plugins.rest',
   require 'plugins.rust-tools',
   require 'plugins.spectre',
   require 'plugins.substitute',
@@ -63,7 +55,9 @@ require('lazy').setup {
   require 'plugins.treesitter',
   require 'plugins.treesitter-textobject',
   require 'plugins.trouble',
+  require 'plugins.uv',
   require 'plugins.ufo',
   require 'plugins.vim-maximizer',
   require 'plugins.which-key',
+  -- require 'plugins.rest',
 }
