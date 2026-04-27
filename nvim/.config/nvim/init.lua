@@ -3,61 +3,75 @@ require 'core.keymaps'
 require 'core.command'
 require 'core.autocmd'
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+-- disable ruff diagnostic messages
+vim.lsp.config('ruff', {
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function() end,
+    ["textDocument/diagnostic"] = function() end,
+  },
+})
+local servers = { 'djlsp', 'emmet_ls', 'lua_ls', 'pyright', 'ruff', 'ts_ls' }
 
-vim.diagnostic.config {
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true, -- <-- головне
-}
+vim.pack.add({
+  { src = 'https://github.com/neanias/everforest-nvim' },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/nvim-mini/mini.nvim' },
+  { src = 'https://github.com/stevearc/oil.nvim' },
+  { src = 'https://github.com/saghen/blink.cmp' },
+  { src = 'https://github.com/mrcjkb/rustaceanvim' },
+  { src = 'https://github.com/benomahony/uv.nvim' },
+  { src = 'https://github.com/folke/trouble.nvim' },
+  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
+  { src = 'https://github.com/gbprod/substitute.nvim' },
+  { src = 'https://github.com/declancm/maximize.nvim' },
+  { src = 'https://github.com/cbochs/grapple.nvim' },
+  { src = 'https://github.com/lukas-reineke/indent-blankline.nvim' },
+  { src = 'https://github.com/christoomey/vim-tmux-navigator' },
+  { src = 'https://github.com/olrtg/nvim-emmet' },
+  { src = 'https://github.com/OXY2DEV/markview.nvim' },
+  { src = 'https://github.com/MagicDuck/grug-far.nvim' },
+  { src = 'https://github.com/goolord/alpha-nvim' },
+  { src = "https://github.com/L3MON4D3/LuaSnip" },
+  { src = "https://github.com/rafamadriz/friendly-snippets" },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  { src = 'https://github.com/stevearc/quicker.nvim' },
+  { src = 'https://github.com/mfussenegger/nvim-dap' },
+  { src = 'https://github.com/rcarriga/nvim-dap-ui' },
+  { src = 'https://github.com/nvim-neotest/nvim-nio' },
+  { src = 'https://github.com/rachartier/tiny-inline-diagnostic.nvim' },
+})
 
--- vim.lsp.set_log_level 'debug'
+vim.cmd("packadd nvim.undotree")
 
-require('lazy').setup {
-  --   -- *** --
-  --   -- Color Themes uncomment to apply, and restart nvim. (one only)
-  require 'plugins.themes.everforest',
-  --   -- require 'plugins.themes.catppuccin',
-  --   -- require 'plugins.themes.nord',
-  --   -- *** --
-  --   -- Modules
-  require 'plugins.alpha',
-  require 'plugins.auto-save',
-  require 'plugins.blink-cmp',
-  require 'plugins.comment',
-  require 'plugins.gitsigns',
-  require 'plugins.harpoon',
-  require 'plugins.indent-blunkline',
-  require 'plugins.lazygit',
-  require 'plugins.lsp',
-  require 'plugins.lualine',
-  require 'plugins.mini',
-  require 'plugins.misc',
-  require 'plugins.none-ls',
-  require 'plugins.oil',
-  require 'plugins.render-markdown',
-  require 'plugins.rust-tools',
-  require 'plugins.spectre',
-  require 'plugins.substitute',
-  require 'plugins.telescope',
-  require 'plugins.treesitter',
-  require 'plugins.treesitter-textobject',
-  require 'plugins.trouble',
-  require 'plugins.uv',
-  require 'plugins.ufo',
-  require 'plugins.vim-maximizer',
-  require 'plugins.which-key',
-  -- require 'plugins.rest',
-}
+require 'plugins.treesitter'
+require 'plugins.indent-blankline'
+require 'plugins.maximize'
+require 'plugins.substitute'
+require 'plugins.trouble'
+require 'plugins.oil'
+require 'plugins.grug-far'
+require 'plugins.alpha'
+require 'plugins.grapple'
+require 'plugins.gitsigns'
+require 'plugins.uv'
+-- require 'plugins.mini.ai'
+require 'plugins.mini.clue'
+require 'plugins.mini.hipatterns'
+require 'plugins.mini.icons'
+require 'plugins.mini.pairs'
+require 'plugins.mini.pick'
+require 'plugins.mini.statusline'
+require 'plugins.mini.surround'
+require 'plugins.quickfix'
+require("luasnip.loaders.from_vscode").lazy_load()
+
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
+end
+
+require 'plugins.blink'
+require 'plugins.dap_ui'
+require 'plugins.dap'
+require 'plugins.inline_diagnostic'
+
+vim.cmd.colorscheme('everforest')

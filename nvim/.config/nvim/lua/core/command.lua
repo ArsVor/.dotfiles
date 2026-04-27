@@ -1,17 +1,12 @@
-local minimize = require 'plugins.custom.minimize'
+local custom = require 'plugins.custom.functions'
 
 vim.api.nvim_create_user_command('LspInfo', ':checkhealth vim.lsp', {})
 vim.api.nvim_create_user_command('QQ', 'q!', {})
 vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('WQ', 'wq', {})
+vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('Minimize', function()
-  minimize.minimize_current_split()
-end, {})
-vim.api.nvim_create_user_command('AutoSelectSystemVenv', function()
-  vim.cmd 'PyLspFindVenvs' -- Виконуємо команду PyLspFindVenvs
-  vim.defer_fn(function()
-    vim.fn.feedkeys('default', 't') -- Вводимо "system" у fzf
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 't', false) -- Натискаємо Return
-  end, 500) -- Чекаємо 500 мс, щоб дати fzf час відобразити список
+  custom.minimize_current_split()
 end, {})
 
 vim.api.nvim_create_user_command('PyrightIgnore', function()

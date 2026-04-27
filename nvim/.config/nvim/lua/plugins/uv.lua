@@ -1,55 +1,40 @@
-return {
-  'benomahony/uv.nvim',
-  -- Optional filetype to lazy load when you open a python file
-  -- ft = { python }
-  -- Optional dependency, but recommended:
-  -- dependencies = {
-  --   "folke/snacks.nvim"
-  -- or
-  --   "nvim-telescope/telescope.nvim"
-  -- },
-  opts = {
-    picker_integration = true,
+local uv = require('uv')
+
+uv.setup({
+  -- Auto-activate virtual environments when found
+  auto_activate_venv = true,
+  notify_activate_venv = true,
+
+  -- Auto commands for directory changes
+  auto_commands = true,
+
+  -- Integration with snacks picker
+  picker_integration = true,
+
+  -- Keymaps to register (set to false to disable)
+  keymaps = {
+    prefix = "<leader>u", -- Main prefix for uv commands
+    commands = false,      -- Show uv commands menu (<leader>u)
+    run_file = true,      -- Run current file (<leader>ur)
+    run_selection = true, -- Run selected code (<leader>us)
+    run_function = true,  -- Run function (<leader>uf)
+    venv = true,          -- Environment management (<leader>ue)
+    init = true,          -- Initialize uv project (<leader>ui)
+    add = true,           -- Add a package (<leader>ua)
+    remove = true,        -- Remove a package (<leader>ud)
+    sync = true,          -- Sync packages (<leader>uc)
+    sync_all = true,      -- Sync all packages, extras and groups (<leader>uC)
   },
 
-  config = function()
-    require('uv').setup {
-      -- Auto-activate virtual environments when found
-      auto_activate_venv = true,
-      notify_activate_venv = true,
+  -- Execution options
+  execution = {
+    -- Python run command template
+    run_command = "uv run python",
 
-      -- Auto commands for directory changes
-      auto_commands = true,
+    -- Show output in notifications
+    notify_output = true,
 
-      -- Integration with snacks picker
-      picker_integration = true,
-
-      -- Keymaps to register (set to false to disable)
-      keymaps = {
-        prefix = '<leader>u', -- Main prefix for uv commands
-        commands = false, -- Show uv commands menu (<leader>x)
-        run_file = true, -- Run current file (<leader>xr)
-        run_selection = true, -- Run selected code (<leader>xs)
-        run_function = true, -- Run function (<leader>xf)
-        venv = true, -- Environment management (<leader>xe)
-        init = true, -- Initialize uv project (<leader>xi)
-        add = true, -- Add a package (<leader>xa)
-        remove = true, -- Remove a package (<leader>xd)
-        sync = true, -- Sync packages (<leader>xc)
-        sync_all = true, -- Sync all packages, extras and groups (<leader>xC)
-      },
-
-      -- Execution options
-      execution = {
-        -- Python run command template
-        run_command = 'uv run python',
-
-        -- Show output in notifications
-        notify_output = true,
-
-        -- Notification timeout in ms
-        notification_timeout = 10000,
-      },
-    }
-  end,
-}
+    -- Notification timeout in ms
+    notification_timeout = 10000,
+  },
+})

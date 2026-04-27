@@ -3,5 +3,8 @@
     "globals": [
       "vim"
     ]
-  }
+  },
+    "diagnostics.disable": [
+        "different-requires"
+    ]
 }
