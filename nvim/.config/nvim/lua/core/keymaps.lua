@@ -140,6 +140,12 @@ vim.keymap.set('n', '<leader>cq', function()
   { noremap = true, silent = true, desc = '[Q]uickFix autoimport' }
 )
 
+-- QuickFix buffer
+vim.keymap.set('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true, desc = '[Q]uickFix buffer [O]pen' })
+vim.keymap.set('n', '<leader>qn', ':cnext<CR>', { noremap = true, silent = true, desc = '[Q]uickFix go [N]ext' })
+vim.keymap.set('n', '<leader>qp', ':cprev<CR>', { noremap = true, silent = true, desc = '[Q]uickFix go [P]rev' })
+vim.keymap.set('n', '<leader>qx', ':cclose<CR>', { noremap = true, silent = true, desc = '[Q]uickFix buffer close' })
+
 -- Add Pyright ignore diagnostics
 vim.keymap.set('n', '<leader>cx', '<cmd> PyrightIgnore <CR>',
   { noremap = true, silent = true, desc = 'Add Pyright ignore diagnostics' })

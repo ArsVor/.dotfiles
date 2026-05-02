@@ -16,6 +16,7 @@ clue.setup({
     { mode = 'n', keys = '<Leader>g', desc = '+Git' },
     { mode = 'n', keys = '<Leader>h', desc = '+Grapple (Harpoon)' },
     { mode = 'n', keys = '<Leader>p', desc = '+Paste' },
+    { mode = 'n', keys = '<Leader>q', desc = '+QuickFix' },
     { mode = 'n', keys = '<Leader>s', desc = '+Split' },
     { mode = 'n', keys = '<Leader>u', desc = '+Uv' },
     { mode = 'n', keys = '<Leader>w', desc = '+Write' },
