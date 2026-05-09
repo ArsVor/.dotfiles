@@ -39,6 +39,7 @@ vim.pack.add({
   { src = 'https://github.com/rcarriga/nvim-dap-ui' },
   { src = 'https://github.com/nvim-neotest/nvim-nio' },
   { src = 'https://github.com/rachartier/tiny-inline-diagnostic.nvim' },
+  { src = 'https://github.com/nicolas-martin/region-folding.nvim' },
 })
 
 vim.cmd("packadd nvim.undotree")
@@ -54,6 +55,7 @@ require 'plugins.alpha'
 require 'plugins.grapple'
 require 'plugins.gitsigns'
 require 'plugins.uv'
+require 'plugins.region'
 -- require 'plugins.mini.ai'
 require 'plugins.mini.clue'
 require 'plugins.mini.hipatterns'
