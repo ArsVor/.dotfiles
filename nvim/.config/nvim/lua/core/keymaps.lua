@@ -91,6 +91,19 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = false, desc =
 vim.keymap.set('n', 'n', 'nzzzv', { noremap = true, silent = false, desc = 'Find [N]ext and center' })
 vim.keymap.set('n', 'N', 'Nzzzv', { noremap = true, silent = false, desc = 'Find Previous and center' })
 
+-- Go to Region
+vim.keymap.set('n', ']r', function()
+    require("plugins.custom.functions").go_to_region(1)
+  end,
+  { noremap = true, silent = true, desc = 'Next [R]egion' }
+)
+
+vim.keymap.set('n', '[r', function()
+    require("plugins.custom.functions").go_to_region(-1)
+  end,
+  { noremap = true, silent = true, desc = 'Prev [R]egion' }
+)
+
 
 -- ** NAVIGATE IN INSER MODE ** --
 --
@@ -251,7 +264,7 @@ vim.keymap.set('n', '<leader>wr', ':write<CR>:source<CR>', { noremap = true, sil
 vim.keymap.set('n', '-', ':Oil<CR>')
 
 
--- ** UDOTREE ** --
+-- ** UNDOTREE ** --
 --
 vim.keymap.set('n', '<leader>U', ':Undotree<CR>', { noremap = true, silent = true, desc = 'Open Undotree' })
 
@@ -311,3 +324,12 @@ vim.keymap.set({ 'n', 'v' }, '<leader>Q', function()
     require('dapui').eval()
   end,
   { noremap = true, silent = true, desc = 'Hover eval' })
+
+
+-- ** ??? ** __
+
+vim.keymap.set('n', 'gcr', function()
+    require("plugins.custom.functions").comment_reg_block()
+  end,
+  { noremap = true, silent = true, desc = 'Toggle region comment' }
+)

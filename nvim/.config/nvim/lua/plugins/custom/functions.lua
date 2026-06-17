@@ -1,28 +1,27 @@
 local M = {}
 
 function M.get_visual_selection()
-    local region = vim.fn.getregionpos(vim.fn.getpos('v'), vim.fn.getpos('.'), {
-        type = 'v',
-        exclusive = false,
-        eol = false,
-    })
-    local s = region[1][1]
-    local e = region[#region][2]
+  local region = vim.fn.getregionpos(vim.fn.getpos('v'), vim.fn.getpos('.'), {
+    type = 'v',
+    exclusive = false,
+    eol = false,
+  })
+  local s = region[1][1]
+  local e = region[#region][2]
 
-    local buf = 0
+  local buf = 0
 
-    local lines = vim.api.nvim_buf_get_text(
-        buf,
-        s[2] - 1,
-        s[3] - 1,
-        e[2] - 1,
-        e[3],
-        {}
-    )
+  local lines = vim.api.nvim_buf_get_text(
+    buf,
+    s[2] - 1,
+    s[3] - 1,
+    e[2] - 1,
+    e[3],
+    {}
+  )
 
-    return lines[1]
+  return lines[1]
 end
-
 
 function M.is_splited()
   local normal_window_count = 0
@@ -34,14 +33,13 @@ function M.is_splited()
   return normal_window_count > 1
 end
 
-
 function M.minimize_current_split()
   if not M.is_splited() then
     vim.notify('Already one window', 'WARN', { title = 'WARNING', hide_from_history = true })
     return
   end
 
-  local total_width = vim.o.columns -- Загальна ширина робочої області
+  local total_width = vim.o.columns               -- Загальна ширина робочої області
   local win_width = vim.api.nvim_win_get_width(0) -- Ширина поточного вікна
 
   if win_width == total_width then
@@ -52,7 +50,6 @@ function M.minimize_current_split()
     vim.cmd 'vert res 10'
   end
 end
-
 
 function M.show_auto_imports()
   local current_word = vim.fn.expand '<cword>' -- Отримуємо слово під курсором
@@ -74,7 +71,7 @@ function M.show_auto_imports()
         local cleanedImport = item.data.autoImportText:match '```%s*(.-)%s*```' or item.data.autoImportText
         table.insert(imports, {
           label = num .. ' ' .. cleanedImport, -- Відображається у вікні вибору
-          import_text = cleanedImport, -- Текст для імпорту
+          import_text = cleanedImport,         -- Текст для імпорту
         })
       end
     end
@@ -103,6 +100,92 @@ function M.show_auto_imports()
       }
     end)
   end)
+end
+
+local function get_region_name(line)
+  return line:match("REG%s+(.+)")
+end
+
+local function find_end(lines, name, start_i)
+  local target = "REGEND " .. name
+  for i = start_i + 1, #lines do
+    if lines[i]:find(vim.pesc(target), 1, true) then
+      return i
+    end
+  end
+end
+
+local function find_region(lines, current_line, endpoint, way)
+  for i = current_line, endpoint, way do
+    if lines[i]:match("REG%s+") then
+      return i
+    end
+  end
+  return 0
+end
+
+function M.comment_reg_block()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local current_line = cursor[1]
+  local start_i = find_region(lines, current_line, 1, -1)
+
+  if start_i == 0 then
+    vim.notify("No REG found", vim.log.levels.WARN)
+    return
+  end
+
+  local start_line = lines[start_i]
+  local name = get_region_name(start_line)
+
+  if not name then
+    vim.notify("No REG name found", vim.log.levels.WARN)
+    return
+  end
+
+  local end_i = find_end(lines, name, start_i)
+
+  if not end_i then
+    vim.notify("REGEND not found for " .. name, vim.log.levels.WARN)
+    return
+  end
+
+  -- move to end line
+  vim.api.nvim_win_set_cursor(0, { end_i - 1, 0 })
+
+  -- enter visual line mode and select range
+  vim.cmd("normal! V")
+
+  -- move cursor to start
+  vim.api.nvim_win_set_cursor(0, { start_i + 1, 0 })
+  local keys = vim.api.nvim_replace_termcodes('gc', true, false, true)
+  vim.api.nvim_feedkeys(keys, 'v', false)
+end
+
+function M.go_to_region(way)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local current_line = cursor[1]
+  local endpoint
+  if way == 1 then
+    endpoint = #lines
+    current_line = current_line + 1
+  else
+    endpoint = 1
+    current_line = current_line - 1
+  end
+
+  local target = find_region(lines, current_line, endpoint, way)
+
+  if target ~= 0 then
+    vim.api.nvim_win_set_cursor(0, { target, 0 })
+  else
+    return
+  end
 end
 
 return M
