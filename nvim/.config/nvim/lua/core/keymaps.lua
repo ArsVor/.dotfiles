@@ -258,6 +258,19 @@ vim.keymap.set('n', '<leader>wa', '<cmd>noautocmd w <CR>',
 -- Run instance
 vim.keymap.set('n', '<leader>wr', ':write<CR>:source<CR>', { noremap = true, silent = false, desc = '[W]rite and [R]un' })
 
+-- Sass autocompiler
+vim.keymap.set('n', '<leader>wss', ':SassStatus<CR>', {
+  noremap = true,
+  silent = true,
+  desc =
+  '[S]ass autocompiler [S]tatus'
+})
+vim.keymap.set('n', '<leader>wst', ':SassToggle<CR>', {
+  noremap = true,
+  silent = true,
+  desc =
+  '[S]ass autocompiler [T]oggle'
+})
 
 -- ** OIL ** --
 --
