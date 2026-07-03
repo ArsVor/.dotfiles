@@ -13,6 +13,7 @@ alias ff="fastfetch" ## Print system information (fastfetch).
 alias j="z " ## Zoxide. 
 alias mk="~/.scr/mk.sh " ## Create directory or file, if they do not already exist. Make parent directories as needed. 
 # mkj="mk <path>; cd <path> " ## Create directory or file, if they do not already exist (Make parent directories as needed). And jump to this directory.
+alias mv="mv -i " ## Move interactive (Prompt before overwrite).
 alias rmd="rm -d " ## Remove directory.
 alias rmdf="rm -dfr " ## Remove directory and all children objects.
 alias v="nvim " ## neovim
