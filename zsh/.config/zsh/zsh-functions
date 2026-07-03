@@ -175,9 +175,14 @@ function myip () {
     echo (ifconfig | grep broadcast | awk '{print $2}')
 }
 
-function mdj () {
-	mkdir -p $1
-	cd $1
+function mkj () {
+	~/.scr/mk.sh $1
+
+    if [[ $1 =~ \/$ ]]; then
+        cd $1
+    else
+        cd $(dirname $1)
+    fi
 }
 
 function bttr () {
