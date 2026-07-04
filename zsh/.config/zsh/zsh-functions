@@ -172,7 +172,7 @@ function ct () {
 }
 
 function myip () {
-    echo (ifconfig | grep broadcast | awk '{print $2}')
+    echo $(ifconfig wlp0s20f3 | grep broadcast | awk '{print $2}')
 }
 
 function mkj () {
